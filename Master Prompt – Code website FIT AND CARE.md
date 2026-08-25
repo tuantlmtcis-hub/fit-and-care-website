@@ -1580,5 +1580,37 @@ flyctl secrets set TELEGRAM_BOT_TOKEN=xxx TELEGRAM_CHAT_ID=xxx -a fitandcare-web
 
 ## Trạng thái hiện tại
 
-- Đã deploy thành công lên Fly.io với backend Node, `telegramConfigured: false` (đang chờ chủ thương hiệu tạo bot và cung cấp `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`).
-- Sau khi có token, chỉ cần chạy lệnh `flyctl secrets set` ở trên là form hoạt động đầy đủ, không cần deploy lại code.
+- **Đã kích hoạt đầy đủ.** Bot `@FitAndCareNotify_bot` đã tạo, token đã set qua `flyctl secrets`, đã đăng ký webhook. Form đăng ký tư vấn gửi thông báo Telegram thật.
+
+---
+
+# 47. CẬP NHẬT: LỆNH BOT + LƯU TRỮ BỀN VỮNG (2026-08-25)
+
+## Lệnh bot đã hỗ trợ (qua webhook, nhắn trực tiếp với bot trên Telegram)
+
+| Lệnh | Quyền | Chức năng |
+|---|---|---|
+| `/start` | Ai cũng dùng được | Trả về chat_id của người nhắn + cho biết đã được nhận thông báo hay chưa |
+| `/help` | Ai cũng dùng được | Liệt kê lệnh; nếu đã có quyền thì hiện thêm lệnh quản trị |
+| `/add <chat_id>` | Chỉ người đã có trong danh sách | Thêm 1 chat_id mới vào danh sách nhận thông báo |
+| `/remove <chat_id>` | Chỉ người đã có trong danh sách | Xóa 1 chat_id khỏi danh sách |
+| `/list` | Chỉ người đã có trong danh sách | Xem toàn bộ danh sách hiện tại |
+
+**Cơ chế bảo mật**: `/add` và `/remove` chỉ dùng được nếu chat_id của người gọi lệnh đã nằm trong danh sách hiện tại — người lạ tìm ra bot không thể tự thêm mình vào để xem thông tin khách hàng.
+
+## Lưu trữ bền vững
+
+- Danh sách chat_id được ghi vào `/data/chatids.json` trên **Fly Volume** (`fitandcare_data`, 1GB, region `sin`) — không dùng biến môi trường tĩnh nữa nên `/add`/`/remove` có hiệu lực ngay, sống sót qua việc máy chủ tự tắt khi rảnh (`auto_stop_machines`).
+- App đã scale về **1 máy duy nhất** (`flyctl scale count 1`) vì Fly Volume chỉ gắn được với 1 máy — phù hợp vì đây là site lượng truy cập thấp.
+- `TELEGRAM_CHAT_ID` (env var) giờ chỉ còn vai trò **seed ban đầu** (dùng lần đầu khi file `chatids.json` chưa tồn tại) — sau đó danh sách sống trong file, không đọc lại từ env var nữa.
+
+## Vận hành: thêm admin mới (không cần dev/code)
+
+1. Admin mới mở Telegram, nhắn `/start` cho bot → nhận được chat_id của họ.
+2. Một người **đã có quyền** (ví dụ dev) gõ `/add <chat_id đó>` ngay trong Telegram.
+3. Xong — admin mới bắt đầu nhận thông báo ngay, không cần chạy `flyctl secrets set` hay liên hệ dev nữa.
+
+## Webhook
+
+- Đăng ký 1 lần bằng `setWebhook` (đã thực hiện) trỏ về `https://fitandcare-web.fly.dev/api/telegram-webhook`.
+- Bảo vệ bằng `TELEGRAM_WEBHOOK_SECRET` (random 24-byte hex, lưu trong Fly secrets) — request webhook không đúng secret sẽ bị từ chối (401).
