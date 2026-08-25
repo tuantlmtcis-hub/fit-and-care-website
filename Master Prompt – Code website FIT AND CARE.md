@@ -1551,3 +1551,34 @@ fly.toml
 - Chưa chạy audit Lighthouse/axe accessibility chính thức (mục 30, 31 của brief) — nên làm trước khi ra mắt chính thức.
 - **Live site**: https://fitandcare-web.fly.dev
 - **Source code**: https://github.com/tuantlmtcis-hub/fit-and-care-website
+
+---
+
+# 46. CẬP NHẬT: BACKEND GỬI TELEGRAM (2026-08-25)
+
+Theo yêu cầu, form đăng ký tư vấn không còn mở `mailto:` mà **tự động gửi qua bot Telegram** cho admin.
+
+## Thay đổi kiến trúc
+
+- Site chuyển từ nginx static sang **Node.js + Express** (`server.js`) để có thể xử lý API backend.
+- Route mới: `POST /api/consult` — validate dữ liệu ở server (không chỉ client), gọi Telegram Bot API `sendMessage` để báo cho admin.
+- Route `GET /api/health` để kiểm tra nhanh server + trạng thái đã cấu hình Telegram hay chưa.
+- `js/script.js`: form submit giờ `fetch('/api/consult')` thay vì build `mailto:` link.
+
+## Cấu hình token/chat_id (dành cho dev, không cần sửa code)
+
+Token/chat_id đọc từ **biến môi trường**, đổi được bất cứ lúc nào:
+
+```bash
+flyctl secrets set TELEGRAM_BOT_TOKEN=xxx TELEGRAM_CHAT_ID=xxx -a fitandcare-web
+```
+
+- Hỗ trợ nhiều admin cùng nhận thông báo: `TELEGRAM_CHAT_ID=111,222` (cách nhau dấu phẩy).
+- Đổi admin sau này chỉ cần chạy lại lệnh trên với chat_id mới — không cần đụng vào code hay redeploy thủ công (flyctl tự deploy lại khi set secret).
+- File `.env.example` mô tả cách lấy token (qua @BotFather) và chat_id (qua `getUpdates`).
+- Khi chưa cấu hình, server trả lỗi thân thiện cho khách ("Hệ thống chưa được cấu hình...") thay vì báo giả thành công hoặc crash — đã kiểm tra qua `GET /api/health`.
+
+## Trạng thái hiện tại
+
+- Đã deploy thành công lên Fly.io với backend Node, `telegramConfigured: false` (đang chờ chủ thương hiệu tạo bot và cung cấp `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`).
+- Sau khi có token, chỉ cần chạy lệnh `flyctl secrets set` ở trên là form hoạt động đầy đủ, không cần deploy lại code.
