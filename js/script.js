@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* Header shadow on scroll */
+  /* Header shadow on scroll + back-to-top visibility */
   const header = document.getElementById('header');
-  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+  const backToTop = document.getElementById('backToTop');
+  const onScroll = () => {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    backToTop.classList.toggle('show', window.scrollY > 480);
+  };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
   /* Mobile menu toggle */
   const menuToggle = document.getElementById('menuToggle');

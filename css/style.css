@@ -133,8 +133,19 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
 }
 .hero-badge strong{display:block;font-family:var(--font-head);font-size:18px;color:var(--navy);}
 .hero-badge span{color:var(--muted);font-weight:600;}
-.hero-badge.badge-top{top:8%;left:-4%;}
-.hero-badge.badge-bottom{top:46%;right:-9%;}
+.hero-badge.badge-top{top:6%;left:-6%;animation:floatBadge 4.5s ease-in-out infinite;}
+.hero-badge.badge-bottom{bottom:-2%;right:2%;animation:floatBadge 4.5s ease-in-out infinite;animation-delay:1.6s;}
+.hero-badge .dot{animation:pulseDot 2.4s ease-in-out infinite;}
+.hero-badge.badge-bottom .dot{animation-delay:1.6s;}
+
+@keyframes floatBadge{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+@keyframes pulseDot{
+  0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.35);}
+  50%{box-shadow:0 0 0 8px rgba(76,175,80,0);}
+}
 .hero-badge .dot{width:38px;height:38px;border-radius:50%;background:var(--gray-bg);display:flex;align-items:center;justify-content:center;color:var(--green);}
 
 /* Stats strip */
@@ -346,6 +357,19 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
 .footer-contact svg{flex:none;color:var(--yellow);margin-top:3px;}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding:24px 0;font-size:13px;flex-wrap:wrap;gap:12px;}
 .footer-bottom-links{display:flex;gap:20px;}
+
+/* ============ Back to top ============ */
+.back-to-top{
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--navy);color:var(--yellow);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow-card);
+  opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity .3s ease, transform .3s ease, visibility .3s ease, background .25s ease;
+}
+.back-to-top.show{opacity:1;visibility:visible;transform:translateY(0);}
+.back-to-top:hover{background:var(--yellow);color:var(--navy);}
 
 /* ============ Reveal animation ============ */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
