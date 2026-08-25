@@ -1,8 +1,15 @@
-FROM nginx:alpine
+FROM node:20-alpine
 
-COPY index.html /usr/share/nginx/html/index.html
-COPY css /usr/share/nginx/html/css
-COPY js /usr/share/nginx/html/js
-COPY assets /usr/share/nginx/html/assets
+WORKDIR /app
 
-EXPOSE 80
+COPY package.json package-lock.json* ./
+RUN npm install --omit=dev
+
+COPY server.js ./
+COPY index.html ./
+COPY css ./css
+COPY js ./js
+COPY assets ./assets
+
+EXPOSE 8080
+CMD ["node", "server.js"]

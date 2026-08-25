@@ -124,8 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const formStatus = document.getElementById('formStatus');
+    const submitBtn = consultForm.querySelector('button[type="submit"]');
 
-    consultForm.addEventListener('submit', (e) => {
+    consultForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!validate()) {
         formStatus.textContent = 'Vui lòng kiểm tra lại thông tin bên trên.';
@@ -133,22 +134,40 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const goal = document.getElementById('cf-goal').value;
-      const message = document.getElementById('cf-message').value.trim();
-      const subject = `Đăng ký tư vấn - ${fields.name.input.value.trim()}`;
-      const bodyLines = [
-        `Họ và tên: ${fields.name.input.value.trim()}`,
-        `Số điện thoại: ${fields.phone.input.value.trim()}`,
-        `Email: ${fields.email.input.value.trim()}`,
-        `Mục tiêu: ${goal || 'Chưa chọn'}`,
-        `Nội dung cần tư vấn: ${message || 'Không có'}`,
-      ];
-      const mailto = `mailto:hello@fitandcare.vn?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+      const payload = {
+        name: fields.name.input.value.trim(),
+        phone: fields.phone.input.value.trim(),
+        email: fields.email.input.value.trim(),
+        goal: document.getElementById('cf-goal').value,
+        message: document.getElementById('cf-message').value.trim(),
+      };
 
-      window.location.href = mailto;
-      formStatus.textContent = 'Đã mở ứng dụng email trên thiết bị của bạn để gửi thông tin đăng ký. Nếu không tự mở, vui lòng gửi trực tiếp tới hello@fitandcare.vn.';
-      formStatus.className = 'form-status success';
-      consultForm.reset();
+      submitBtn.disabled = true;
+      formStatus.textContent = 'Đang gửi...';
+      formStatus.className = 'form-status';
+
+      try {
+        const res = await fetch('/api/consult', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (res.ok && data.ok) {
+          formStatus.textContent = 'Cảm ơn bạn! Fit and Care đã nhận được thông tin và sẽ liên hệ lại sớm nhất.';
+          formStatus.className = 'form-status success';
+          consultForm.reset();
+        } else {
+          formStatus.textContent = data.error || 'Có lỗi xảy ra, vui lòng thử lại hoặc liên hệ trực tiếp qua hotline/email.';
+          formStatus.className = 'form-status error';
+        }
+      } catch (err) {
+        formStatus.textContent = 'Không kết nối được máy chủ. Vui lòng thử lại hoặc liên hệ trực tiếp qua hotline/email.';
+        formStatus.className = 'form-status error';
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   }
 

@@ -1,3 +1,5 @@
 brandkit.png
 logo.png
 .claude/
+node_modules/
+.env

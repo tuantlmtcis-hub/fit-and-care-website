@@ -1,0 +1,16 @@
+{
+  "name": "fit-and-care-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fit and Care landing page with consultation form (Telegram notification backend)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
