@@ -341,20 +341,39 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
 .cta-inner p{color:rgba(255,255,255,0.78);margin-bottom:32px;font-size:16.5px;}
 .cta-actions{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;}
 
-/* ============ Contact / Consultation form ============ */
-.contact-section{background:var(--gray-bg);}
-.contact-grid{display:grid;grid-template-columns:0.8fr 1.2fr;gap:0;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-soft);}
+/* ============ Consultation modal ============ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;background:rgba(8,20,45,0.6);backdrop-filter:blur(3px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s ease;
+}
+.modal-overlay.open{opacity:1;visibility:visible;}
+.modal-card{
+  position:relative;background:var(--white);border-radius:var(--radius-lg);
+  width:100%;max-width:680px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 30px 70px -20px rgba(8,20,45,0.5);
+  transform:translateY(24px) scale(0.98);opacity:0;transition:transform .3s ease, opacity .3s ease;
+}
+.modal-overlay.open .modal-card{transform:translateY(0) scale(1);opacity:1;}
+.modal-close{
+  position:absolute;top:16px;right:16px;z-index:2;width:36px;height:36px;border-radius:50%;
+  background:var(--gray-bg);color:var(--navy);display:flex;align-items:center;justify-content:center;
+  transition:background .2s ease, color .2s ease;
+}
+.modal-close:hover{background:var(--navy);color:var(--white);}
+.modal-body{padding:44px 40px 36px;}
+.modal-info{margin-bottom:28px;padding-bottom:24px;border-bottom:1px solid var(--gray-border);}
+.modal-info h3{font-size:21px;margin:10px 0 8px;}
+.modal-lead{color:var(--muted);font-size:14.5px;margin-bottom:20px;}
+.modal-info .contact-info-list{display:flex;flex-wrap:wrap;gap:18px 32px;margin-bottom:16px;}
+.modal-info .contact-info-list li{display:flex;gap:10px;align-items:center;}
+.modal-info .ci-icon{width:32px;height:32px;background:var(--gray-bg);color:var(--navy);}
+.modal-info .contact-info-list strong{font-size:14px;color:var(--navy);}
+.modal-info .contact-info-list span{font-size:11.5px;color:var(--muted);}
+.modal-info .contact-privacy-note{font-size:12px;color:var(--muted);}
+body.modal-open{overflow:hidden;}
 
-.contact-info{background:linear-gradient(160deg,var(--navy),var(--navy-3));color:var(--white);padding:48px 42px;}
-.contact-info h3{color:var(--white);font-size:19px;margin-bottom:26px;}
-.contact-info-list{display:flex;flex-direction:column;gap:22px;margin-bottom:32px;}
-.contact-info-list li{display:flex;gap:14px;align-items:flex-start;}
-.ci-icon{flex:none;width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;color:var(--yellow);}
-.contact-info-list strong{display:block;font-family:var(--font-head);font-size:15px;}
-.contact-info-list span{font-size:12.5px;color:rgba(255,255,255,0.68);}
-.contact-privacy-note{font-size:12.5px;color:rgba(255,255,255,0.55);line-height:1.6;border-top:1px solid rgba(255,255,255,0.14);padding-top:20px;}
-
-.consult-form{padding:48px 42px;display:flex;flex-direction:column;gap:18px;}
+.consult-form{display:flex;flex-direction:column;gap:16px;}
 .form-row-group{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
 .form-row{display:flex;flex-direction:column;gap:6px;}
 .form-row label{font-size:13.5px;font-weight:700;color:var(--navy);}
@@ -421,7 +440,6 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
   .about-grid{grid-template-columns:1fr;}
   .about-visual{max-width:360px;margin:0 auto;}
   .package-grid{grid-template-columns:1fr;}
-  .contact-grid{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr 1fr;}
 }
 @media (max-width:900px){
@@ -454,7 +472,7 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
   .values-grid{grid-template-columns:1fr;}
   .program-grid{grid-template-columns:1fr;}
   .package-info,.package-list{padding:36px 26px;}
-  .contact-info,.consult-form{padding:32px 24px;}
+  .modal-body{padding:56px 22px 26px;}
   .form-row-group{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}

@@ -44,6 +44,40 @@ document.addEventListener('DOMContentLoaded', () => {
   tmPrev.addEventListener('click', () => tmTrack.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
   tmNext.addEventListener('click', () => tmTrack.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
 
+  /* Consultation modal open/close */
+  const consultModal = document.getElementById('consultModal');
+  const modalClose = document.getElementById('modalClose');
+  let lastFocused = null;
+
+  const openConsultModal = () => {
+    lastFocused = document.activeElement;
+    consultModal.classList.add('open');
+    consultModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    const firstInput = document.getElementById('cf-name');
+    if (firstInput) setTimeout(() => firstInput.focus(), 200);
+  };
+  const closeConsultModal = () => {
+    consultModal.classList.remove('open');
+    consultModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (lastFocused) lastFocused.focus();
+  };
+
+  document.querySelectorAll('a[href="#lien-he"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      openConsultModal();
+    });
+  });
+  modalClose.addEventListener('click', closeConsultModal);
+  consultModal.addEventListener('click', (e) => {
+    if (e.target === consultModal) closeConsultModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && consultModal.classList.contains('open')) closeConsultModal();
+  });
+
   /* Consultation form validation */
   const consultForm = document.getElementById('consultForm');
   if (consultForm) {
