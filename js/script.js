@@ -44,6 +44,80 @@ document.addEventListener('DOMContentLoaded', () => {
   tmPrev.addEventListener('click', () => tmTrack.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
   tmNext.addEventListener('click', () => tmTrack.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
 
+  /* Consultation form validation */
+  const consultForm = document.getElementById('consultForm');
+  if (consultForm) {
+    const fields = {
+      name: { input: document.getElementById('cf-name'), error: document.getElementById('err-name') },
+      phone: { input: document.getElementById('cf-phone'), error: document.getElementById('err-phone') },
+      email: { input: document.getElementById('cf-email'), error: document.getElementById('err-email') },
+      consent: { input: document.getElementById('cf-consent'), error: document.getElementById('err-consent') },
+    };
+    const phoneRe = /^(0|\+84)[0-9]{9,10}$/;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const setError = (field, message) => {
+      const row = field.input.closest('.form-row') || field.input.closest('.form-check');
+      if (message) {
+        field.error.textContent = message;
+        field.error.classList.add('show');
+        if (row) row.classList.add('has-error');
+      } else {
+        field.error.textContent = '';
+        field.error.classList.remove('show');
+        if (row) row.classList.remove('has-error');
+      }
+    };
+
+    const validate = () => {
+      let valid = true;
+      const nameVal = fields.name.input.value.trim();
+      if (nameVal.length < 2) { setError(fields.name, 'Vui lòng nhập họ tên đầy đủ'); valid = false; }
+      else setError(fields.name, '');
+
+      const phoneVal = fields.phone.input.value.trim();
+      if (!phoneRe.test(phoneVal)) { setError(fields.phone, 'Số điện thoại không hợp lệ'); valid = false; }
+      else setError(fields.phone, '');
+
+      const emailVal = fields.email.input.value.trim();
+      if (!emailRe.test(emailVal)) { setError(fields.email, 'Email không hợp lệ'); valid = false; }
+      else setError(fields.email, '');
+
+      if (!fields.consent.input.checked) { setError(fields.consent, 'Vui lòng đồng ý để Fit and Care liên hệ lại'); valid = false; }
+      else setError(fields.consent, '');
+
+      return valid;
+    };
+
+    const formStatus = document.getElementById('formStatus');
+
+    consultForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!validate()) {
+        formStatus.textContent = 'Vui lòng kiểm tra lại thông tin bên trên.';
+        formStatus.className = 'form-status error';
+        return;
+      }
+
+      const goal = document.getElementById('cf-goal').value;
+      const message = document.getElementById('cf-message').value.trim();
+      const subject = `Đăng ký tư vấn - ${fields.name.input.value.trim()}`;
+      const bodyLines = [
+        `Họ và tên: ${fields.name.input.value.trim()}`,
+        `Số điện thoại: ${fields.phone.input.value.trim()}`,
+        `Email: ${fields.email.input.value.trim()}`,
+        `Mục tiêu: ${goal || 'Chưa chọn'}`,
+        `Nội dung cần tư vấn: ${message || 'Không có'}`,
+      ];
+      const mailto = `mailto:hello@fitandcare.vn?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+      window.location.href = mailto;
+      formStatus.textContent = 'Đã mở ứng dụng email trên thiết bị của bạn để gửi thông tin đăng ký. Nếu không tự mở, vui lòng gửi trực tiếp tới hello@fitandcare.vn.';
+      formStatus.className = 'form-status success';
+      consultForm.reset();
+    });
+  }
+
   /* Reveal on scroll */
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
