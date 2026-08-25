@@ -391,9 +391,13 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
   .header-actions .btn-primary{display:none;}
   .nav .btn-primary{display:inline-flex;margin-top:12px;}
   .hero-grid{grid-template-columns:1fr;}
-  .hero-visual{order:-1;max-width:320px;margin:0 auto 48px;}
-  .hero-badge.badge-bottom{bottom:-64px;right:0;}
-  .hero-badge.badge-top{left:-2%;}
+  .hero-visual{order:-1;max-width:280px;margin:0 auto 48px;}
+  .hero-badge{padding:9px 12px;gap:8px;font-size:11px;border-radius:12px;}
+  .hero-badge strong{font-size:14px;}
+  .hero-badge .dot{width:28px;height:28px;}
+  .hero-badge .dot svg{width:14px;height:14px;}
+  .hero-badge.badge-top{left:-8%;top:2%;}
+  .hero-badge.badge-bottom{bottom:-54px;right:-4%;}
   .hero-cta{justify-content:center;}
   .hero-copy{text-align:center;}
   .hero-copy p.lead{margin-left:auto;margin-right:auto;}
