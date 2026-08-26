@@ -1614,3 +1614,39 @@ flyctl secrets set TELEGRAM_BOT_TOKEN=xxx TELEGRAM_CHAT_ID=xxx -a fitandcare-web
 
 - Đăng ký 1 lần bằng `setWebhook` (đã thực hiện) trỏ về `https://fitandcare-web.fly.dev/api/telegram-webhook`.
 - Bảo vệ bằng `TELEGRAM_WEBHOOK_SECRET` (random 24-byte hex, lưu trong Fly secrets) — request webhook không đúng secret sẽ bị từ chối (401).
+
+---
+
+# 48. CẬP NHẬT: CRM NHẸ THEO DÕI KHÁCH HÀNG (2026-08-26)
+
+Theo yêu cầu quản lý cộng tác viên (CTV), bot Telegram giờ theo dõi được toàn bộ vòng đời 1 lượt đăng ký tư vấn.
+
+## Mã khách hàng
+
+- Mỗi lượt đăng ký form được gán 1 mã dạng `yy-xxxx` (vd `26-0001`) — `yy` là 2 số cuối năm (theo giờ Việt Nam), `xxxx` là số thứ tự 4 chữ số, tự reset về `0001` khi sang năm mới.
+- Bộ đếm lưu trong `/data/customers.json` trên Fly Volume (cùng volume với danh sách chat_id).
+
+## Luồng cập nhật trạng thái khách
+
+1. Khách điền form → bot gửi thông báo kèm mã KH + **nút "✏️ Cập nhật trạng thái"**.
+2. CTV bấm nút → bot hỏi lại "Nhập nội dung cập nhật cho khách #..." → CTV gõ trả lời → tự động ghi vào lịch sử.
+3. Hoặc gõ trực tiếp lệnh `/update <mã KH> <nội dung>` bất cứ lúc nào (không phụ thuộc nút còn hiệu lực hay không).
+4. Mỗi khách lưu **toàn bộ lịch sử** cập nhật (ai, lúc nào, nội dung gì) — không ghi đè, phục vụ báo cáo `/check-id` và tra cứu chi tiết.
+
+## Lệnh báo cáo
+
+| Lệnh | Chức năng |
+|---|---|
+| `/check-cust` | Danh sách khách đăng ký **hôm nay** (tên, SĐT, trạng thái mới nhất) |
+| `/check-cust <mã KH>` | Xem **chi tiết đầy đủ** 1 khách + toàn bộ lịch sử cập nhật |
+| `/check-cust-week` | Danh sách khách đăng ký **tuần này** (Thứ 2 → Chủ nhật, giờ VN) |
+| `/check-cust-month` | Danh sách khách đăng ký **tháng này** |
+| `/check-id [chat_id]` | Thống kê 1 CTV đã tương tác bao nhiêu lượt khách, lúc nào (mặc định xem của chính người gọi lệnh) |
+
+Tất cả lệnh báo cáo chỉ dùng được bởi chat_id đã có trong danh sách (cùng cơ chế bảo mật với `/add`/`/remove`).
+
+## Lưu ý kỹ thuật
+
+- Toàn bộ mốc thời gian (hôm nay/tuần này/tháng này) tính theo **giờ Việt Nam (UTC+7)**, không theo giờ UTC của server.
+- Báo cáo dài (nhiều khách) tự động chia nhỏ thành nhiều tin nhắn nếu vượt quá giới hạn ký tự của Telegram.
+- Đã phát hiện & sửa lỗi: khi tin nhắn dùng `parse_mode=HTML`, Telegram **tắt** tính năng tự nhận diện `/lệnh` thành link xanh — phải bọc thủ công từng lệnh trong thẻ `<code>` để hiện đúng.
