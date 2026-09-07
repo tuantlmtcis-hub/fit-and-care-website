@@ -64,6 +64,7 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
   transition:transform .25s ease, box-shadow .25s ease, background .25s ease, color .25s ease;
   white-space:nowrap;
 }
+.btn[hidden]{display:none;}
 .btn-primary{background:var(--yellow);color:var(--navy);box-shadow:0 12px 24px -10px rgba(255,212,0,0.6);}
 .btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 30px -10px rgba(255,212,0,0.7);}
 .btn-outline{border:2px solid var(--navy);color:var(--navy);}
@@ -71,6 +72,9 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
 .btn-ghost-light{border:2px solid rgba(255,255,255,0.4);color:var(--white);}
 .btn-ghost-light:hover{background:var(--white);color:var(--navy);}
 .btn-block{width:100%;}
+.btn-text{background:none;box-shadow:none;padding:6px 10px;font-size:13px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;font-weight:600;}
+.btn-text:hover{color:var(--navy);transform:none;}
+button.btn{border:none;cursor:pointer;font-family:inherit;}
 
 /* ============ Header ============ */
 .header{
@@ -310,6 +314,7 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;color:var(--navy);line-
 .pricing-result strong{font-family:var(--font-head);font-size:20px;color:var(--navy);}
 .pricing-result span{font-size:12px;color:var(--muted);}
 .pricing-card .btn{width:100%;justify-content:center;}
+.pricing-actions{display:flex;flex-direction:column;gap:6px;}
 .pricing-commitments{
   display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-top:44px;padding-top:32px;
   border-top:1px solid rgba(13,43,92,0.1);
@@ -418,6 +423,42 @@ body.modal-open{overflow:hidden;}
 .form-check{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--muted);cursor:pointer;}
 .form-check input{margin-top:3px;accent-color:var(--navy);width:16px;height:16px;flex:none;}
 
+/* ============ Payment modal ============ */
+.modal-card-payment{max-width:560px;}
+.modal-body-payment .eyebrow{margin-bottom:10px;}
+.modal-body-payment h3{font-size:21px;margin-bottom:22px;}
+#paymentForm{display:flex;flex-direction:column;gap:16px;}
+#paymentForm[hidden]{display:none;}
+
+.pkg-select{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.pkg-option{
+  display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+  border:1.5px solid var(--gray-border);border-radius:12px;padding:14px 8px;cursor:pointer;
+  transition:border-color .2s ease, background .2s ease;
+}
+.pkg-option input{position:absolute;opacity:0;pointer-events:none;}
+.pkg-option-name{font-family:var(--font-head);font-weight:700;color:var(--navy);font-size:15px;}
+.pkg-option-price{font-size:12px;color:var(--muted);}
+.pkg-option:has(input:checked){border-color:var(--navy);background:rgba(13,43,92,0.05);}
+
+.method-select{display:flex;flex-direction:column;gap:10px;}
+.method-option{
+  display:flex;align-items:center;gap:12px;border:1.5px solid var(--gray-border);border-radius:12px;
+  padding:13px 16px;cursor:pointer;font-size:14px;color:var(--dark);transition:border-color .2s ease, background .2s ease;
+}
+.method-option input{position:absolute;opacity:0;pointer-events:none;}
+.method-option svg{flex:none;color:var(--navy);}
+.method-option em{color:var(--muted);font-style:normal;font-size:12.5px;}
+.method-option:has(input:checked){border-color:var(--navy);background:rgba(13,43,92,0.05);}
+
+.bank-result{margin-top:8px;}
+.bank-result h4{font-size:17px;margin-bottom:14px;}
+.bank-info-list{display:flex;flex-direction:column;gap:10px;background:var(--gray-bg);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.bank-info-list li{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;}
+.bank-info-list li span{color:var(--muted);}
+.bank-info-list li strong{color:var(--navy);text-align:right;}
+.bank-note{font-size:12.5px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+
 .form-status{font-size:13.5px;font-weight:600;text-align:center;min-height:18px;}
 .form-status.success{color:var(--green);}
 .form-status.error{color:#E4572E;}
@@ -502,6 +543,7 @@ body.modal-open{overflow:hidden;}
   .pricing-card{padding:30px 24px;}
   .modal-body{padding:56px 22px 26px;}
   .form-row-group{grid-template-columns:1fr;}
+  .pkg-select{grid-template-columns:1fr;}
   .footer-grid{grid-template-columns:1fr;}
   .footer-bottom{flex-direction:column;text-align:center;}
 }

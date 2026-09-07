@@ -171,6 +171,163 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* Payment modal: chọn gói + thanh toán */
+  const paymentModal = document.getElementById('paymentModal');
+  const paymentModalClose = document.getElementById('paymentModalClose');
+  const paymentForm = document.getElementById('paymentForm');
+  const bankResult = document.getElementById('bankResult');
+  let lastFocusedPayment = null;
+
+  const PACKAGE_LABELS = { start: 'Start Fit', smart: 'Smart Fit', super: 'Super Fit' };
+
+  const resetPaymentModal = () => {
+    paymentForm.hidden = false;
+    bankResult.hidden = true;
+    paymentForm.reset();
+    document.getElementById('paymentFormStatus').textContent = '';
+    document.getElementById('paymentFormStatus').className = 'form-status';
+    document.getElementById('bankConfirmStatus').textContent = '';
+    document.getElementById('bankConfirmStatus').className = 'form-status';
+    ['pkg', 'pf-name', 'pf-phone', 'pf-email', 'method'].forEach(id => {
+      const err = document.getElementById('err-' + id);
+      if (err) { err.textContent = ''; err.classList.remove('show'); }
+    });
+  };
+
+  const openPaymentModal = (preselectPackage) => {
+    resetPaymentModal();
+    if (preselectPackage) {
+      const radio = paymentForm.querySelector(`input[name="pkg"][value="${preselectPackage}"]`);
+      if (radio) radio.checked = true;
+    }
+    lastFocusedPayment = document.activeElement;
+    paymentModal.classList.add('open');
+    paymentModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    setTimeout(() => document.getElementById('pf-name')?.focus(), 200);
+  };
+  const closePaymentModal = () => {
+    paymentModal.classList.remove('open');
+    paymentModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (lastFocusedPayment) lastFocusedPayment.focus();
+  };
+
+  document.querySelectorAll('.open-payment').forEach(btn => {
+    btn.addEventListener('click', () => openPaymentModal(btn.dataset.package));
+  });
+  paymentModalClose.addEventListener('click', closePaymentModal);
+  paymentModal.addEventListener('click', (e) => {
+    if (e.target === paymentModal) closePaymentModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && paymentModal.classList.contains('open')) closePaymentModal();
+  });
+
+  if (paymentForm) {
+    const phoneRe = /^(0|\+84)[0-9]{9,10}$/;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const pfName = document.getElementById('pf-name');
+    const pfPhone = document.getElementById('pf-phone');
+    const pfEmail = document.getElementById('pf-email');
+    const setErr = (id, message) => {
+      const err = document.getElementById('err-' + id);
+      if (!err) return;
+      err.textContent = message || '';
+      err.classList.toggle('show', Boolean(message));
+    };
+    const validatePayment = () => {
+      let valid = true;
+      if (!paymentForm.querySelector('input[name="pkg"]:checked')) { setErr('pkg', 'Vui lòng chọn 1 gói dịch vụ'); valid = false; } else setErr('pkg', '');
+      if (pfName.value.trim().length < 2) { setErr('pf-name', 'Vui lòng nhập họ tên đầy đủ'); valid = false; } else setErr('pf-name', '');
+      if (!phoneRe.test(pfPhone.value.trim())) { setErr('pf-phone', 'Số điện thoại không hợp lệ'); valid = false; } else setErr('pf-phone', '');
+      if (!emailRe.test(pfEmail.value.trim())) { setErr('pf-email', 'Email không hợp lệ'); valid = false; } else setErr('pf-email', '');
+      if (!paymentForm.querySelector('input[name="method"]:checked')) { setErr('method', 'Vui lòng chọn phương thức thanh toán'); valid = false; } else setErr('method', '');
+      return valid;
+    };
+
+    const paymentFormStatus = document.getElementById('paymentFormStatus');
+    const paymentSubmitBtn = document.getElementById('paymentSubmitBtn');
+
+    paymentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validatePayment()) {
+        paymentFormStatus.textContent = 'Vui lòng kiểm tra lại thông tin bên trên.';
+        paymentFormStatus.className = 'form-status error';
+        return;
+      }
+      const payload = {
+        package: paymentForm.querySelector('input[name="pkg"]:checked').value,
+        name: pfName.value.trim(),
+        phone: pfPhone.value.trim(),
+        email: pfEmail.value.trim(),
+        method: paymentForm.querySelector('input[name="method"]:checked').value,
+      };
+
+      paymentSubmitBtn.disabled = true;
+      paymentFormStatus.textContent = 'Đang xử lý...';
+      paymentFormStatus.className = 'form-status';
+
+      try {
+        const res = await fetch('/api/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.ok) {
+          paymentFormStatus.textContent = data.error || 'Có lỗi xảy ra, vui lòng thử lại hoặc liên hệ trực tiếp.';
+          paymentFormStatus.className = 'form-status error';
+          paymentSubmitBtn.disabled = false;
+          return;
+        }
+
+        if (payload.method === 'vnpay') {
+          paymentFormStatus.textContent = 'Đang chuyển đến trang thanh toán...';
+          paymentFormStatus.className = 'form-status success';
+          window.location.href = data.paymentUrl;
+          return;
+        }
+
+        // bank_transfer
+        document.getElementById('bankName').textContent = data.bank.name;
+        document.getElementById('bankAccount').textContent = data.bank.account;
+        document.getElementById('bankHolder').textContent = data.bank.holder;
+        document.getElementById('bankAmount').textContent = data.bank.amount.toLocaleString('vi-VN') + 'đ';
+        document.getElementById('bankContent').textContent = data.bank.content;
+        paymentForm.hidden = true;
+        bankResult.hidden = false;
+        bankResult.dataset.orderId = data.id;
+      } catch (err) {
+        paymentFormStatus.textContent = 'Không kết nối được máy chủ. Vui lòng thử lại hoặc liên hệ trực tiếp.';
+        paymentFormStatus.className = 'form-status error';
+      } finally {
+        paymentSubmitBtn.disabled = false;
+      }
+    });
+  }
+
+  const bankConfirmBtn = document.getElementById('bankConfirmBtn');
+  if (bankConfirmBtn) {
+    bankConfirmBtn.addEventListener('click', async () => {
+      const orderId = bankResult.dataset.orderId;
+      const status = document.getElementById('bankConfirmStatus');
+      if (!orderId) return;
+      bankConfirmBtn.disabled = true;
+      try {
+        await fetch(`/api/order/${encodeURIComponent(orderId)}/confirm-transfer`, { method: 'POST' });
+        status.textContent = 'Cảm ơn bạn! Fit and Care sẽ xác nhận và liên hệ trong thời gian sớm nhất.';
+        status.className = 'form-status success';
+        bankConfirmBtn.hidden = true;
+      } catch (err) {
+        status.textContent = 'Không kết nối được máy chủ, vui lòng thử lại.';
+        status.className = 'form-status error';
+        bankConfirmBtn.disabled = false;
+      }
+    });
+  }
+
   /* Reveal on scroll */
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {

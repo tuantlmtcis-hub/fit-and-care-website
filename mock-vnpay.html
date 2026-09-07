@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cổng thanh toán (Demo) - Fit and Care</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  body{background:#eef1f6;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;}
+  .vnp-demo-banner{
+    position:fixed;top:0;left:0;right:0;background:#b91c1c;color:#fff;text-align:center;
+    font-weight:700;font-size:13px;padding:8px 12px;z-index:10;letter-spacing:.02em;
+  }
+  .vnp-card{background:#fff;max-width:440px;width:100%;border-radius:16px;box-shadow:0 20px 45px -20px rgba(13,43,92,.35);overflow:hidden;margin-top:34px;}
+  .vnp-head{background:#004896;color:#fff;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+  .vnp-head strong{font-size:20px;letter-spacing:.02em;}
+  .vnp-head span{font-size:11px;background:rgba(255,255,255,.18);padding:3px 9px;border-radius:999px;}
+  .vnp-body{padding:24px;}
+  .vnp-order{background:#f5f7fa;border-radius:12px;padding:14px 16px;margin-bottom:20px;font-size:14px;color:#333;}
+  .vnp-order strong{display:block;color:#0D2B5C;font-size:17px;margin-bottom:4px;}
+  .vnp-row{display:flex;justify-content:space-between;font-size:13px;color:#6B7280;margin-top:4px;}
+  .vnp-methods{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+  .vnp-method{display:flex;align-items:center;gap:10px;border:1px solid #E6E9EF;border-radius:10px;padding:12px 14px;font-size:14px;cursor:pointer;}
+  .vnp-method input{accent-color:#004896;}
+  .vnp-method.checked{border-color:#004896;background:#f0f6ff;}
+  .vnp-installment{display:none;margin:-6px 0 16px 26px;font-size:13px;color:#6B7280;}
+  .vnp-installment.show{display:block;}
+  .vnp-installment select{margin-top:6px;width:100%;padding:8px 10px;border:1px solid #E6E9EF;border-radius:8px;font-size:13px;}
+  .vnp-fields{display:grid;gap:12px;margin-bottom:20px;}
+  .vnp-fields input{width:100%;padding:11px 12px;border:1px solid #E6E9EF;border-radius:8px;font-size:14px;font-family:inherit;}
+  .vnp-fields-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .vnp-actions{display:flex;flex-direction:column;gap:10px;}
+  .vnp-btn{border:none;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+  .vnp-btn-success{background:#16a34a;color:#fff;}
+  .vnp-btn-fail{background:#fff;color:#b91c1c;border:1.5px solid #b91c1c;}
+  .vnp-btn:disabled{opacity:.6;cursor:not-allowed;}
+  .vnp-note{font-size:12px;color:#9CA3AF;text-align:center;margin-top:14px;line-height:1.5;}
+  .vnp-loading{text-align:center;padding:60px 20px;color:#6B7280;}
+</style>
+</head>
+<body>
+  <div class="vnp-demo-banner">🧪 MÔI TRƯỜNG DEMO — mô phỏng cổng thanh toán, chưa kết nối VNPay thật. Không nhập thông tin thẻ thật.</div>
+
+  <div class="vnp-card">
+    <div class="vnp-head">
+      <strong>VNPAY</strong>
+      <span>DEMO / SANDBOX</span>
+    </div>
+    <div class="vnp-body" id="vnpBody">
+      <div class="vnp-loading" id="vnpLoading">Đang tải thông tin đơn hàng...</div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const orderId = params.get('orderId');
+  const body = document.getElementById('vnpBody');
+
+  function money(n){ return Number(n).toLocaleString('vi-VN') + 'đ'; }
+
+  if (!orderId) {
+    body.innerHTML = '<p style="color:#b91c1c">Thiếu mã đơn hàng.</p>';
+    return;
+  }
+
+  fetch('/api/mock-vnpay/info?orderId=' + encodeURIComponent(orderId))
+    .then(r => r.json())
+    .then(data => {
+      if (!data.ok) { body.innerHTML = '<p style="color:#b91c1c">Không tìm thấy đơn hàng.</p>'; return; }
+      const o = data.order;
+      body.innerHTML = `
+        <div class="vnp-order">
+          <strong>${o.packageName}</strong>
+          <div class="vnp-row"><span>Mã đơn hàng</span><span>${o.id}</span></div>
+          <div class="vnp-row"><span>Khách hàng</span><span>${o.name}</span></div>
+          <div class="vnp-row"><span>Số tiền thanh toán</span><span><b>${money(o.amount)}</b></span></div>
+        </div>
+
+        <div class="vnp-methods">
+          <label class="vnp-method checked">
+            <input type="radio" name="cardtype" value="domestic" checked>
+            <span>Thẻ ATM nội địa / Tài khoản ngân hàng</span>
+          </label>
+          <label class="vnp-method">
+            <input type="radio" name="cardtype" value="intl">
+            <span>Thẻ quốc tế Visa / Mastercard / JCB</span>
+          </label>
+        </div>
+
+        <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#0D2B5C;font-weight:600;margin-bottom:6px;">
+          <input type="checkbox" id="installmentCheck"> Trả góp qua thẻ tín dụng
+        </label>
+        <div class="vnp-installment" id="installmentBox">
+          <select id="installmentMonths">
+            <option>3 tháng - 0% lãi suất</option>
+            <option>6 tháng - 0% lãi suất</option>
+            <option>9 tháng</option>
+            <option>12 tháng</option>
+          </select>
+        </div>
+
+        <div class="vnp-fields">
+          <input type="text" placeholder="Số thẻ (demo - không cần nhập thật)" maxlength="19">
+          <div class="vnp-fields-row">
+            <input type="text" placeholder="MM/YY">
+            <input type="text" placeholder="OTP / CVV">
+          </div>
+        </div>
+
+        <div class="vnp-actions">
+          <button class="vnp-btn vnp-btn-success" id="btnSuccess">✅ Giả lập thanh toán thành công</button>
+          <button class="vnp-btn vnp-btn-fail" id="btnFail">❌ Giả lập thanh toán thất bại</button>
+        </div>
+        <p class="vnp-note">Đây là trang mô phỏng để kiểm thử luồng thanh toán. Khi kết nối VNPay thật, khách hàng sẽ được chuyển tới trang thanh toán chính thức của VNPay tại đây.</p>
+      `;
+
+      document.getElementById('installmentCheck').addEventListener('change', (e) => {
+        document.getElementById('installmentBox').classList.toggle('show', e.target.checked);
+      });
+      document.querySelectorAll('.vnp-method').forEach(el => {
+        el.addEventListener('click', () => {
+          document.querySelectorAll('.vnp-method').forEach(m => m.classList.remove('checked'));
+          el.classList.add('checked');
+        });
+      });
+
+      function complete(success) {
+        document.querySelectorAll('.vnp-btn').forEach(b => b.disabled = true);
+        fetch('/api/mock-vnpay/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ orderId, success }),
+        })
+          .then(() => {
+            location.href = '/thanh-toan-ket-qua.html?orderId=' + encodeURIComponent(orderId) + '&status=' + (success ? 'success' : 'fail');
+          })
+          .catch(() => {
+            document.querySelectorAll('.vnp-btn').forEach(b => b.disabled = false);
+            alert('Có lỗi xảy ra, vui lòng thử lại.');
+          });
+      }
+      document.getElementById('btnSuccess').addEventListener('click', () => complete(true));
+      document.getElementById('btnFail').addEventListener('click', () => complete(false));
+    })
+    .catch(() => { body.innerHTML = '<p style="color:#b91c1c">Có lỗi xảy ra, vui lòng thử lại.</p>'; });
+})();
+</script>
+</body>
+</html>
