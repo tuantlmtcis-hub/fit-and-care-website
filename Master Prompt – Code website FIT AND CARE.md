@@ -1650,3 +1650,21 @@ Tất cả lệnh báo cáo chỉ dùng được bởi chat_id đã có trong da
 - Toàn bộ mốc thời gian (hôm nay/tuần này/tháng này) tính theo **giờ Việt Nam (UTC+7)**, không theo giờ UTC của server.
 - Báo cáo dài (nhiều khách) tự động chia nhỏ thành nhiều tin nhắn nếu vượt quá giới hạn ký tự của Telegram.
 - Đã phát hiện & sửa lỗi: khi tin nhắn dùng `parse_mode=HTML`, Telegram **tắt** tính năng tự nhận diện `/lệnh` thành link xanh — phải bọc thủ công từng lệnh trong thẻ `<code>` để hiện đúng.
+
+---
+
+# 49. CẬP NHẬT: BẢNG GIÁ 3 GÓI THẬT (2026-08-26)
+
+Thay phần "Gói Coaching 1:1 - Liên hệ để nhận báo giá" (chung chung) bằng bảng giá 3 gói thật, theo đúng poster chính thức của thương hiệu:
+
+| Gói | Thời lượng | Học phí | Kết quả trung bình |
+|---|---|---|---|
+| **Start Fit** (Gói khởi động) | 1 tháng | 13.333.333 VNĐ | Giảm 3&ndash;4kg |
+| **Smart Fit** (Gói tăng tốc) | 2 tháng | 23.333.333 VNĐ | Giảm 4&ndash;7kg |
+| **Super Fit** (Gói chuyển đổi toàn diện) | 3 tháng | 33.333.333 VNĐ | Giảm 7&ndash;10kg |
+
+- Smart Fit và Super Fit đều ghi rõ "Bao gồm toàn bộ quyền lợi gói trước" (kế thừa quyền lợi gói thấp hơn), đúng như thiết kế poster.
+- Thẻ Smart Fit (gói giữa) được làm nổi bật nhẹ (viền vàng, phóng to 1.03x) — quy ước UI thông thường, không phải khẳng định marketing.
+- Thêm dải "Cam kết của Fit and Care" (Đồng hành tận tâm · Khoa học - An toàn · Hiệu quả - Đo lường được · Bền vững) bên dưới bảng giá, đúng nội dung poster.
+- Đã xóa CSS cũ `.package-info/.package-list` (layout 1 gói kiểu "liên hệ báo giá"), thay bằng `.pricing-grid/.pricing-card` (layout 3 cột, responsive: 3 cột desktop → 1 cột mobile).
+- Đã kiểm tra responsive trên cả desktop và mobile trước khi deploy.
