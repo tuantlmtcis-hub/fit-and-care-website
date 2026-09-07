@@ -3,3 +3,4 @@ logo.png
 .claude/
 node_modules/
 .env
+data/
