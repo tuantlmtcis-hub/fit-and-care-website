@@ -1668,3 +1668,38 @@ Thay phần "Gói Coaching 1:1 - Liên hệ để nhận báo giá" (chung chung
 - Thêm dải "Cam kết của Fit and Care" (Đồng hành tận tâm · Khoa học - An toàn · Hiệu quả - Đo lường được · Bền vững) bên dưới bảng giá, đúng nội dung poster.
 - Đã xóa CSS cũ `.package-info/.package-list` (layout 1 gói kiểu "liên hệ báo giá"), thay bằng `.pricing-grid/.pricing-card` (layout 3 cột, responsive: 3 cột desktop → 1 cột mobile).
 - Đã kiểm tra responsive trên cả desktop và mobile trước khi deploy.
+
+---
+
+# 50. CẬP NHẬT: MODULE ĐĂNG KÝ &amp; THANH TOÁN GÓI (2026-09-07)
+
+Thêm luồng "chọn gói → thanh toán" ngay trên site: mỗi thẻ giá có nút **"Thanh toán ngay"** mở modal chọn gói (đã điền sẵn theo thẻ vừa bấm) + thông tin khách + phương thức thanh toán.
+
+## 2 phương thức thanh toán
+
+1. **VNPay (thẻ Visa/Mastercard, hỗ trợ trả góp)**
+   - Backend build URL thanh toán ký bằng **HMAC-SHA512** đúng chuẩn VNPay (`vnp_Version 2.1.0`, sort tham số theo alphabet, encode chuẩn `qs`-style).
+   - Có route `/api/vnpay/return` (khách quay lại) và `/api/vnpay/ipn` (VNPay gọi ngầm server-to-server) — cả hai đều tự xác thực chữ ký độc lập, đơn chỉ được đánh dấu `paid` khi chữ ký hợp lệ + `vnp_ResponseCode=00`.
+   - **Chế độ DEMO tự động bật** khi chưa có `VNP_TMN_CODE`/`VNP_HASH_SECRET` thật (công ty đang chờ người phụ trách đăng ký merchant VNPay) — khách được chuyển tới `/mock-vnpay.html`, 1 trang mô phỏng giao diện VNPay có banner đỏ "MÔI TRƯỜNG DEMO" rất rõ ràng để không ai nhầm là thật, có nút giả lập thành công/thất bại và cả tick "Trả góp" (chỉ để xem giao diện, không ảnh hưởng logic — kỳ hạn trả góp thật do VNPay/ngân hàng quyết định dựa trên loại thẻ, không phải do site chọn).
+   - **Khi có key thật**: chỉ cần `flyctl secrets set VNP_TMN_CODE=... VNP_HASH_SECRET=...`, không cần sửa 1 dòng code nào — hệ thống tự chuyển sang thanh toán thật.
+
+2. **Chuyển khoản ngân hàng**
+   - Hiện STK công ty (hiện đang là **dữ liệu mẫu**, đổi qua `flyctl secrets set BANK_NAME=... BANK_ACCOUNT_NUMBER=... BANK_ACCOUNT_HOLDER=...` khi có STK thật) + nội dung chuyển khoản = mã đơn hàng.
+   - Khách bấm "Tôi đã chuyển khoản" → báo Telegram lần nữa cho chắc; CTV/admin bấm nút **"✅ Xác nhận đã nhận tiền"** trên Telegram sau khi tự kiểm tra sao kê thật (không có xác thực ngân hàng tự động — cố tình để tránh rủi ro xác nhận nhầm).
+
+## Mã đơn hàng
+
+- Định dạng `DHyy-XXXX` — `yy` là năm, `XXXX` là **4 ký tự random chữ+số** (bỏ `0/O`, `1/I` cho dễ đọc), kiểm tra trùng lặp trước khi cấp — trông chuyên nghiệp hơn so với số thứ tự tuần tự, không cần sửa nếu có yêu cầu tương tự cho mã khách hàng sau này.
+- Đơn hàng lưu trong `orders.json` trên cùng Fly Volume, tách riêng khỏi `customers.json` (khách tư vấn) và `chatids.json` (danh sách nhận thông báo).
+
+## Lệnh bot mới
+
+`/check-orders` (hôm nay) · `/check-orders &lt;mã đơn&gt;` (chi tiết) · `/check-orders-week` · `/check-orders-month` — cùng cơ chế phân quyền như các lệnh `/check-cust*`.
+
+## Lỗi đã phát hiện &amp; sửa khi test
+
+CSS `#paymentForm{display:flex}` và `.btn{display:inline-flex}` (author style) âm thầm **ghi đè** hành vi mặc định của thuộc tính `hidden` (vốn chỉ có specificity thấp từ UA stylesheet) — khiến form/nút không thực sự ẩn dù đã set `el.hidden = true` trong JS. Phải thêm rule `[hidden]{display:none}` tường minh cho từng selector liên quan. Đây là lỗi dễ tái diễn nếu sau này thêm phần tử `hidden` mới trên các class đã có `display` riêng — cần nhớ thêm `[hidden]` override tương ứng.
+
+## Đã test trước khi deploy
+
+Ký/xác thực chữ ký VNPay (round-trip tự tạo + verify, và test chữ ký sai bị từ chối đúng) · tạo đơn 2 phương thức · mock thanh toán thành công/thất bại · xác nhận chuyển khoản thủ công qua nút Telegram · toàn bộ lệnh báo cáo đơn hàng · giao diện modal trên trình duyệt (chọn gói, chọn phương thức, ẩn/hiện đúng panel) · luồng trả góp demo end-to-end trên site live.
