@@ -290,14 +290,18 @@ button.btn{border:none;cursor:pointer;font-family:inherit;}
   padding:36px 30px;display:flex;flex-direction:column;border:1px solid transparent;
   transition:transform .25s ease, box-shadow .25s ease;
 }
-.pricing-card:hover{transform:translateY(-6px);box-shadow:0 24px 44px -18px rgba(13,43,92,0.28);}
-.pricing-card.featured{border-color:var(--yellow);box-shadow:0 24px 48px -16px rgba(255,212,0,0.35);transform:scale(1.03);}
-.pricing-card.featured:hover{transform:scale(1.03) translateY(-6px);}
+.pricing-card:hover,
+.pricing-card:focus-within{
+  border-color:var(--yellow);transform:translateY(-6px);
+  box-shadow:0 24px 48px -16px rgba(255,212,0,0.35);
+}
 .pricing-tag{
   display:inline-block;align-self:flex-start;background:var(--gray-bg);color:var(--navy);
   font-size:12px;font-weight:700;letter-spacing:.02em;padding:6px 14px;border-radius:999px;margin-bottom:16px;
+  transition:background .25s ease, color .25s ease;
 }
-.pricing-card.featured .pricing-tag{background:rgba(255,212,0,0.18);color:#8a6a00;}
+.pricing-card:hover .pricing-tag,
+.pricing-card:focus-within .pricing-tag{background:rgba(255,212,0,0.18);color:#8a6a00;}
 .pricing-name{font-size:26px;color:var(--navy);margin-bottom:4px;}
 .pricing-duration{font-size:14px;color:var(--muted);font-weight:600;margin-bottom:18px;}
 .pricing-amount{font-family:var(--font-head);font-size:30px;color:var(--navy);margin-bottom:6px;}
@@ -308,9 +312,10 @@ button.btn{border:none;cursor:pointer;font-family:inherit;}
 .pricing-features li svg{flex:none;color:var(--green);margin-top:2px;}
 .pricing-result{
   display:flex;flex-direction:column;background:var(--gray-bg);border-radius:var(--radius-md);
-  padding:12px 16px;margin-bottom:22px;
+  padding:12px 16px;margin-bottom:22px;transition:background .25s ease;
 }
-.pricing-card.featured .pricing-result{background:rgba(255,212,0,0.14);}
+.pricing-card:hover .pricing-result,
+.pricing-card:focus-within .pricing-result{background:rgba(255,212,0,0.14);}
 .pricing-result strong{font-family:var(--font-head);font-size:20px;color:var(--navy);}
 .pricing-result span{font-size:12px;color:var(--muted);}
 .pricing-card .btn{width:100%;justify-content:center;}
@@ -532,8 +537,6 @@ body.modal-open{overflow:hidden;}
   .process-track{grid-template-columns:1fr;gap:36px;}
   .process-track::before{display:none;}
   .pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}
-  .pricing-card.featured{transform:none;}
-  .pricing-card.featured:hover{transform:translateY(-6px);}
   .pricing-commitments{gap:18px 28px;}
 }
 @media (max-width:640px){
