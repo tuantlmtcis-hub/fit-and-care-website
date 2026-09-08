@@ -1,0 +1,24 @@
+constipation.jpg | 1370x1148 | 1424.9 KB -> 199.9 KB | saved 86.0%
+cook_balanced_porridge.jpg | 1400x1120 | 1894.8 KB -> 271.4 KB | saved 85.7%
+cooking_methods.jpg | 1400x933 | 1757.6 KB -> 236.2 KB | saved 86.6%
+drink_water.jpg | 933x1400 | 1765.3 KB -> 235.9 KB | saved 86.6%
+eat_bun_rieu.jpg | 1370x1148 | 1587.8 KB -> 246.0 KB | saved 84.5%
+eat_fruit.jpg | 1370x1148 | 1751.2 KB -> 256.9 KB | saved 85.3%
+eat_hotpot.jpg | 1370x1148 | 1778.7 KB -> 261.0 KB | saved 85.3%
+eat_pho_ga.jpg | 1370x1148 | 1680.5 KB -> 228.6 KB | saved 86.4%
+eat_pizza.jpg | 933x1400 | 1987.6 KB -> 285.6 KB | saved 85.6%
+eat_porridge.jpg | 1371x1147 | 1693.8 KB -> 237.5 KB | saved 86.0%
+food_preparation.jpg | 933x1400 | 2067.8 KB -> 259.7 KB | saved 87.4%
+hand_portion_rule.jpg | 1369x1149 | 1595.7 KB -> 237.8 KB | saved 85.1%
+healthy_food_myths.jpg | 1369x1149 | 1622.7 KB -> 239.2 KB | saved 85.3%
+holiday_with_fitandcare.jpg | 1198x1313 | 1525.5 KB -> 231.2 KB | saved 84.8%
+main_meal_order.jpg | 933x1400 | 1764.5 KB -> 215.7 KB | saved 87.8%
+make_nem.jpg | 1254x1254 | 1961.5 KB -> 292.4 KB | saved 85.1%
+meal_order_breakfast_lunch.jpg | 1370x1148 | 1806.4 KB -> 263.1 KB | saved 85.4%
+non_meat_protein.jpg | 991x1400 | 1756.9 KB -> 252.7 KB | saved 85.6%
+sleep_better.jpg | 991x1400 | 1680.0 KB -> 262.2 KB | saved 84.4%
+tet_feast.jpg | 933x1400 | 2006.6 KB -> 293.9 KB | saved 85.4%
+weight_plateau.jpg | 1370x1148 | 1646.9 KB -> 244.8 KB | saved 85.1%
+why_meal_order_matters.jpg | 933x1400 | 1893.1 KB -> 262.2 KB | saved 86.2%
+
+TOTAL: 37.74 MB -> 5.38 MB | saved 85.7%
