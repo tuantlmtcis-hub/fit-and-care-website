@@ -1,7 +1,12 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+
+const zaloBot = require('./bot/zalo');
+const zaloBotHandler = require('./bot/handler');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -9,6 +14,9 @@ const PORT = process.env.PORT || 8080;
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const TELEGRAM_WEBHOOK_SECRET = process.env.TELEGRAM_WEBHOOK_SECRET || '';
 const INITIAL_CHAT_IDS = process.env.TELEGRAM_CHAT_ID || '';
+
+// --- Zalo Bot Platform (MVP: menu + phân loại keyword đơn giản, chưa AI/RAG) ---
+const ZALO_BOT_WEBHOOK_SECRET = process.env.ZALO_BOT_WEBHOOK_SECRET || '';
 
 // --- VNPay (thanh toán thẻ) ---
 // Chưa có TMN Code/Secret thật -> tự động chạy ở CHẾ ĐỘ DEMO (mô phỏng, không phải cổng VNPay thật).
@@ -104,6 +112,32 @@ saveOrderDB(orderDB);
 const pendingUpdate = new Map(); // chatId -> customerId
 
 app.use(express.json());
+
+// --- Route riêng cho ảnh Kiến thức bot Zalo (bug: hiện trên Zalo Desktop, KHÔNG hiện trên Zalo
+// Mobile dù curl xác nhận content-type/content-length/accept-ranges/HTTPS/không-redirect qua
+// express.static mặc định đều đúng). Đặt TRƯỚC express.static để route này match trước. So với
+// express.static mặc định: thêm Content-Disposition: inline tường minh (mặc định KHÔNG có), và
+// tắt ETag dạng weak (W/"...") để loại trừ khả năng client mobile xử lý conditional-GET/ETag yếu
+// khác với desktop — dùng res.sendFile() (cùng lib `send` với express.static) nên Range/206 vẫn
+// đúng chuẩn, không tự viết lại logic Range.
+const BOT_KNOWLEDGE_DIR = path.join(__dirname, 'assets', 'bot-knowledge');
+app.get('/assets/bot-knowledge/:file', (req, res, next) => {
+  const filePath = path.join(BOT_KNOWLEDGE_DIR, req.params.file);
+  if (!filePath.startsWith(BOT_KNOWLEDGE_DIR + path.sep)) return res.sendStatus(400);
+  res.sendFile(
+    filePath,
+    {
+      maxAge: '1h',
+      cacheControl: true,
+      etag: false,
+      headers: { 'Content-Disposition': 'inline' },
+    },
+    (err) => {
+      if (err) next(err);
+    }
+  );
+});
+
 app.use(express.static(path.join(__dirname)));
 
 const phoneRe = /^(0|\+84)[0-9]{9,10}$/;
@@ -864,6 +898,24 @@ app.post('/api/telegram-webhook', async (req, res) => {
   }
 });
 
+// ---------- Webhook Zalo Bot (FIT AND CARE Assistant, MVP) ----------
+app.post('/api/zalo-webhook', async (req, res) => {
+  if (ZALO_BOT_WEBHOOK_SECRET) {
+    const incomingSecret = req.get('X-Bot-Api-Secret-Token');
+    if (incomingSecret !== ZALO_BOT_WEBHOOK_SECRET) return res.sendStatus(401);
+  }
+  res.sendStatus(200); // ack ngay, xử lý bất đồng bộ
+
+  try {
+    const eventName = req.body && req.body.event_name;
+    const chatId = req.body && req.body.message && req.body.message.chat && req.body.message.chat.id;
+    console.log('[zalo-bot] Nhận sự kiện:', eventName, chatId ? `chatId=${chatId}` : '');
+    await zaloBotHandler.handleUpdate(req.body);
+  } catch (err) {
+    console.error('[zalo-bot] Lỗi xử lý webhook', err);
+  }
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     ok: true,
@@ -872,6 +924,7 @@ app.get('/api/health', (req, res) => {
     customers: customerDB.customers.length,
     orders: orderDB.orders.length,
     vnpayDemoMode: VNPAY_DEMO_MODE,
+    zaloBotConfigured: zaloBot.isConfigured(),
   });
 });
 

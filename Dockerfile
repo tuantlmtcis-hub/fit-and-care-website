@@ -10,6 +10,7 @@ COPY index.html ./
 COPY css ./css
 COPY js ./js
 COPY assets ./assets
+COPY bot ./bot
 
 EXPOSE 8080
 CMD ["node", "server.js"]
