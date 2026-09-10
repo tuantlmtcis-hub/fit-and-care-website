@@ -420,60 +420,79 @@
   <div class="container">
     <div class="section-head center reveal">
       <div class="eyebrow">Câu chuyện thực tế</div>
-      <h2>Hành trình thay đổi cùng FIT AND CARE</h2>
-      <p>Mỗi hành trình là một câu chuyện riêng. Những chia sẻ dưới đây sẽ được cập nhật cùng khách hàng thực tế của FIT AND CARE.</p>
+      <h2>Bạn có thể nhìn thấy mình trong những hành trình này</h2>
+      <p>Mỗi người có một hoàn cảnh khác nhau. FIT AND CARE cá nhân hóa lộ trình dựa trên nhịp sống, nhu cầu và mục tiêu thực tế của từng khách hàng.</p>
     </div>
 
-    <!--
-      Chuẩn bị cho phân nhóm câu chuyện theo hoàn cảnh khách hàng (bật khi có đủ case thật):
-      data-category dùng 1 trong các giá trị sau — "van-phong" (Văn phòng), "sau-sinh" (Sau sinh),
-      "di-cong-tac" (Đi công tác), "nam-manager" (Nam giới/Manager), "duy-tri" (Duy trì cân nặng).
-      Khi có case thật: (1) gắn data-category tương ứng cho từng .tm-card thay placeholder,
-      (2) bỏ comment khối .tm-filters bên dưới, (3) thêm JS lọc theo data-category —
-      chỉ hiển thị nút lọc cho nhóm nào đang có ít nhất 1 case thật, không hiển thị nhóm rỗng.
-
-      <div class="tm-filters" id="tmFilters">
-        <button type="button" class="tm-filter active" data-filter="all">Tất cả</button>
-        <button type="button" class="tm-filter" data-filter="van-phong">Văn phòng</button>
-        <button type="button" class="tm-filter" data-filter="sau-sinh">Sau sinh</button>
-        <button type="button" class="tm-filter" data-filter="di-cong-tac">Đi công tác</button>
-        <button type="button" class="tm-filter" data-filter="nam-manager">Nam giới/Manager</button>
-        <button type="button" class="tm-filter" data-filter="duy-tri">Duy trì cân nặng</button>
-      </div>
-    -->
+    <div class="tm-filters" id="tmFilters">
+      <button type="button" class="tm-filter active" data-filter="all">Tất cả</button>
+      <button type="button" class="tm-filter" data-filter="van-phong">Văn phòng</button>
+      <button type="button" class="tm-filter" data-filter="sau-sinh">Sau sinh</button>
+      <button type="button" class="tm-filter" data-filter="di-cong-tac">Đi công tác</button>
+      <button type="button" class="tm-filter" data-filter="nam-manager">Nam giới/Manager</button>
+      <button type="button" class="tm-filter" data-filter="duy-tri">Duy trì cân nặng</button>
+    </div>
     <div class="tm-track-wrap reveal">
       <div class="tm-track" id="tmTrack">
-        <div class="tm-card" data-category="placeholder">
-          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
-          <p class="quote">Nội dung câu chuyện thực tế đang được cập nhật cùng khách hàng của FIT AND CARE &ndash; sẽ sớm xuất hiện tại đây.</p>
-          <div class="tm-person">
-            <div class="tm-avatar">FC</div>
-            <div><strong>Khách hàng FIT AND CARE 01</strong><span>Nội dung đang cập nhật</span></div>
+        <div class="tm-card" data-category="van-phong">
+          <div class="tm-card-top">
+            <div class="tm-avatar">VP</div>
+            <div class="tm-card-meta">
+              <span class="tm-category-label">Văn phòng</span>
+              <span class="tm-badge">Mẫu minh họa</span>
+            </div>
           </div>
+          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
+          <h3 class="tm-title">Ăn ngoài mỗi ngày nhưng vẫn muốn sống khỏe hơn</h3>
+          <p class="quote">Lịch làm việc bận rộn, thường xuyên ăn trưa tại văn phòng và ít thời gian tập luyện. Lộ trình được điều chỉnh theo chính những bữa ăn hàng ngày, giúp khách hàng từng bước xây dựng lựa chọn phù hợp mà không cần theo thực đơn cứng nhắc.</p>
         </div>
-        <div class="tm-card" data-category="placeholder">
-          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
-          <p class="quote">Câu chuyện, hình ảnh và chia sẻ thực tế sẽ được cập nhật ngay sau khi khách hàng xác nhận nội dung.</p>
-          <div class="tm-person">
-            <div class="tm-avatar">FC</div>
-            <div><strong>Khách hàng FIT AND CARE 02</strong><span>Nội dung đang cập nhật</span></div>
+        <div class="tm-card" data-category="sau-sinh">
+          <div class="tm-card-top">
+            <div class="tm-avatar">SS</div>
+            <div class="tm-card-meta">
+              <span class="tm-category-label">Sau sinh</span>
+              <span class="tm-badge">Mẫu minh họa</span>
+            </div>
           </div>
+          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
+          <h3 class="tm-title">Tìm lại nhịp sống khỏe sau sinh</h3>
+          <p class="quote">Ưu tiên dinh dưỡng, năng lượng và sự phù hợp với sinh hoạt của mẹ sau sinh. Coach đồng hành theo từng bữa ăn và điều chỉnh lộ trình theo tình trạng thực tế, không áp dụng phương pháp giảm cân cực đoan.</p>
         </div>
-        <div class="tm-card" data-category="placeholder">
-          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
-          <p class="quote">FIT AND CARE trân trọng từng câu chuyện của khách hàng &ndash; những chia sẻ thật sẽ sớm được đăng tải tại đây.</p>
-          <div class="tm-person">
-            <div class="tm-avatar">FC</div>
-            <div><strong>Khách hàng FIT AND CARE 03</strong><span>Nội dung đang cập nhật</span></div>
+        <div class="tm-card" data-category="di-cong-tac">
+          <div class="tm-card-top">
+            <div class="tm-avatar">CT</div>
+            <div class="tm-card-meta">
+              <span class="tm-category-label">Đi công tác</span>
+              <span class="tm-badge">Mẫu minh họa</span>
+            </div>
           </div>
+          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
+          <h3 class="tm-title">Lịch di chuyển liên tục vẫn có thể duy trì thói quen</h3>
+          <p class="quote">Ăn nhà hàng, dự tiệc và thay đổi lịch sinh hoạt thường xuyên không có nghĩa là phải bỏ kế hoạch. FIT AND CARE hướng dẫn cách lựa chọn linh hoạt trong từng hoàn cảnh thực tế.</p>
         </div>
-        <div class="tm-card" data-category="placeholder">
-          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
-          <p class="quote">Bạn là khách hàng của FIT AND CARE? Hãy chia sẻ hành trình của bạn để truyền cảm hứng cho nhiều người hơn.</p>
-          <div class="tm-person">
-            <div class="tm-avatar">FC</div>
-            <div><strong>Khách hàng FIT AND CARE 04</strong><span>Nội dung đang cập nhật</span></div>
+        <div class="tm-card" data-category="nam-manager">
+          <div class="tm-card-top">
+            <div class="tm-avatar">NM</div>
+            <div class="tm-card-meta">
+              <span class="tm-category-label">Nam giới/Manager</span>
+              <span class="tm-badge">Mẫu minh họa</span>
+            </div>
           </div>
+          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
+          <h3 class="tm-title">Bận rộn, ít thời gian gym nhưng vẫn cần chăm sóc sức khỏe</h3>
+          <p class="quote">Lộ trình tập trung vào dinh dưỡng, vận động phù hợp và các thói quen có thể duy trì trong lịch làm việc dày đặc, thay vì yêu cầu những thay đổi quá lớn ngay từ đầu.</p>
+        </div>
+        <div class="tm-card" data-category="duy-tri">
+          <div class="tm-card-top">
+            <div class="tm-avatar">DT</div>
+            <div class="tm-card-meta">
+              <span class="tm-category-label">Duy trì cân nặng</span>
+              <span class="tm-badge">Mẫu minh họa</span>
+            </div>
+          </div>
+          <svg class="tm-quote-icon" width="28" height="22" viewBox="0 0 32 24" fill="currentColor"><path d="M0 24V14.4C0 6.4 4.8 1.2 12.8 0l1.6 3.6C9.2 4.8 6.4 8 6.4 12h7.2V24H0zm17.6 0V14.4c0-8 4.8-13.2 12.8-14.4L32 3.6C26.8 4.8 24 8 24 12h7.2V24H17.6z"/></svg>
+          <h3 class="tm-title">Không chỉ giảm cân &ndash; quan trọng là giữ được thói quen</h3>
+          <p class="quote">Trọng tâm là giúp khách hàng hiểu cách lựa chọn thực phẩm, điều chỉnh khẩu phần và tự xử lý những tình huống như ăn ngoài, du lịch hoặc dự tiệc để có thể duy trì lâu dài.</p>
         </div>
       </div>
       <div class="tm-controls">
@@ -481,7 +500,7 @@
         <button id="tmNext" aria-label="Sau"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
     </div>
-    <p class="tm-disclaimer">* Nội dung câu chuyện khách hàng sẽ được cập nhật với hình ảnh &amp; chia sẻ thực tế sau khi được khách hàng xác nhận.</p>
+    <p class="tm-disclaimer">Các nội dung trên là mẫu minh họa cho cách trình bày. Câu chuyện và hình ảnh khách hàng thực tế sẽ được cập nhật sau khi có xác nhận.</p>
   </div>
 </section>
 

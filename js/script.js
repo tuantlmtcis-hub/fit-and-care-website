@@ -44,6 +44,29 @@ document.addEventListener('DOMContentLoaded', () => {
   tmPrev.addEventListener('click', () => tmTrack.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
   tmNext.addEventListener('click', () => tmTrack.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
 
+  /* Testimonial category filter */
+  const tmFilters = document.getElementById('tmFilters');
+  if (tmFilters) {
+    const tmCards = tmTrack.querySelectorAll('.tm-card');
+    tmFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.tm-filter');
+      if (!btn) return;
+      tmFilters.querySelectorAll('.tm-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      tmCards.forEach(card => {
+        const match = filter === 'all' || card.dataset.category === filter;
+        card.classList.toggle('tm-hidden', !match);
+        if (match) {
+          card.classList.remove('tm-fade-in');
+          void card.offsetWidth;
+          card.classList.add('tm-fade-in');
+        }
+      });
+      tmTrack.scrollTo({ left: 0, behavior: 'smooth' });
+    });
+  }
+
   /* Consultation modal open/close */
   const consultModal = document.getElementById('consultModal');
   const modalClose = document.getElementById('modalClose');
