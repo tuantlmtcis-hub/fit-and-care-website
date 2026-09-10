@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!emailRe.test(emailVal)) { setError(fields.email, 'Email không hợp lệ'); valid = false; }
       else setError(fields.email, '');
 
-      if (!fields.consent.input.checked) { setError(fields.consent, 'Vui lòng đồng ý để Fit and Care liên hệ lại'); valid = false; }
+      if (!fields.consent.input.checked) { setError(fields.consent, 'Vui lòng đồng ý để FIT AND CARE liên hệ lại'); valid = false; }
       else setError(fields.consent, '');
 
       return valid;
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok && data.ok) {
-          formStatus.textContent = 'Cảm ơn bạn! Fit and Care đã nhận được thông tin và sẽ liên hệ lại sớm nhất.';
+          formStatus.textContent = 'Cảm ơn bạn! FIT AND CARE đã nhận được thông tin và sẽ liên hệ lại sớm nhất.';
           formStatus.className = 'form-status success';
           consultForm.reset();
         } else {
@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bankConfirmBtn.disabled = true;
       try {
         await fetch(`/api/order/${encodeURIComponent(orderId)}/confirm-transfer`, { method: 'POST' });
-        status.textContent = 'Cảm ơn bạn! Fit and Care sẽ xác nhận và liên hệ trong thời gian sớm nhất.';
+        status.textContent = 'Cảm ơn bạn! FIT AND CARE sẽ xác nhận và liên hệ trong thời gian sớm nhất.';
         status.className = 'form-status success';
         bankConfirmBtn.hidden = true;
       } catch (err) {
