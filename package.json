@@ -6,10 +6,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "start:bot": "node bot-server.js",
     "check-knowledge": "node scripts/check-knowledge.js",
     "test-knowledge-matching": "node scripts/test-knowledge-matching.js",
     "test-faq-safety": "node scripts/test-faq-safety.js",
-    "report-unanswered": "node scripts/report-unanswered.js"
+    "report-unanswered": "node scripts/report-unanswered.js",
+    "deploy:web": "flyctl deploy -a fitandcare-web -c fly.toml",
+    "deploy:bot": "flyctl deploy -a fitandcare-bot -c fly.bot.toml"
   },
   "engines": {
     "node": ">=18"

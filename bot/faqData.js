@@ -25,14 +25,13 @@ const FAQ_ITEMS = [
     id: 'program_overview',
     keywords: ['fit and care la gi', 'gioi thieu fit and care', 'chuong trinh fit and care la gi', 'fit and care hoat dong nhu the nao'],
     reply:
-      'FIT AND CARE là chương trình quản lý cân nặng, dinh dưỡng và xây dựng lối sống lành mạnh ' +
-      'theo hướng cá nhân hóa. Khách hàng được coach/chuyên gia đồng hành, hướng dẫn cách ăn, vận ' +
-      'động và xây dựng thói quen phù hợp với cuộc sống thực tế — kể cả khi đi ăn ngoài, đi tiệc ' +
-      'hoặc đi du lịch, chương trình vẫn theo dõi tiến trình qua bữa ăn, cân đo và sinh hoạt hằng ' +
-      'ngày của bạn.\n\n' +
-      'Chương trình được xây dựng dựa trên các nguyên tắc khoa học về dinh dưỡng, vận động, ' +
-      'wellness coaching và thay đổi hành vi, có tham chiếu kiến thức và phương pháp từ các ' +
-      'chương trình đào tạo của Harvard Medical School mà đội ngũ sáng lập đã hoàn thành.',
+      'FIT AND CARE là chương trình quản lý cân nặng, dinh dưỡng, vận động và xây dựng lối sống ' +
+      'lành mạnh theo hướng cá nhân hóa — không chỉ đơn thuần là giảm cân. Đội ngũ coach và chuyên ' +
+      'gia được đào tạo về dinh dưỡng tại các trường đại học Y ở Việt Nam, đồng thời có nền tảng ' +
+      'đào tạo về sức khỏe, wellness và coaching từ Harvard Medical School.\n\n' +
+      'Chương trình đồng hành, theo dõi tiến trình qua từng bữa ăn hằng ngày của bạn — kể cả khi ' +
+      'đi du lịch, dự tiệc hay ăn ngoài — không áp dụng thực đơn cứng nhắc, không bắt tính calo và ' +
+      'không sử dụng thực phẩm chức năng.',
   },
   {
     id: 'program_price',
@@ -108,12 +107,12 @@ const FAQ_ITEMS = [
   {
     id: 'program_payment',
     keywords: ['thanh toan nhu the nao', 'hinh thuc thanh toan', 'thanh toan qua the'],
-    reply: 'FIT AND CARE có chính sách trả góp 3, 6, 9 hoặc 12 tháng qua thẻ Visa.',
+    reply: 'FIT AND CARE có chính sách trả góp 3, 6, 9 hoặc 12 tháng cho tất cả các gói dịch vụ.',
   },
   {
     id: 'program_installment',
     keywords: ['tra gop', 'co tra gop khong'],
-    reply: 'Có, FIT AND CARE có chính sách trả góp 3, 6, 9 hoặc 12 tháng qua thẻ Visa nhé.',
+    reply: 'Có, FIT AND CARE hỗ trợ trả góp 3, 6, 9 hoặc 12 tháng cho tất cả các gói dịch vụ nhé.',
   },
   {
     id: 'program_refund',
@@ -125,25 +124,72 @@ const FAQ_ITEMS = [
     keywords: ['dam bao giam', 'cam ket giam', 'chac chan giam'],
     reply: style.NO_WEIGHT_GUARANTEE,
   },
+  {
+    id: 'program_travel',
+    keywords: ['di cong tac', 'di du lich', 'hay di cong tac', 'thuong xuyen di cong tac'],
+    reply:
+      'Có, đây là điểm mạnh của chương trình. Coach sẽ cá nhân hóa theo lịch trình thực tế của ' +
+      'bạn, kể cả khi ăn ngoài, đi tiệc hay di chuyển liên tục — không áp dụng một thực đơn cứng ' +
+      'nhắc.',
+  },
+  {
+    id: 'coach_online_followup',
+    keywords: ['chi nhan file thuc don', 'dong hanh online nhu the nao', 'chi nhan thuc don thoi'],
+    reply:
+      'Không chỉ là thực đơn. Bạn sẽ có coach theo sát, phản hồi bữa ăn thực tế hằng ngày qua ' +
+      'hình ảnh và điều chỉnh liên tục theo tiến trình — không phải một tài liệu tĩnh gửi một ' +
+      'lần. Bạn vẫn ăn uống linh hoạt theo thực đơn của cá nhân và gia đình.',
+  },
+  {
+    id: 'founder_involvement',
+    keywords: ['co phai founder khong', 'founder co truc tiep dong hanh khong', 'ai truc tiep dong hanh toi'],
+    reply:
+      'Founder trực tiếp xây dựng phương pháp và đào tạo đội ngũ coach FIT AND CARE; đội coach ' +
+      'được đào tạo theo cùng phương pháp để đảm bảo chất lượng đồng hành đồng nhất, nhưng không ' +
+      'phải lúc nào cũng làm việc trực tiếp 1-1 với founder.',
+  },
+  {
+    id: 'compare_meal_plan',
+    keywords: ['khac gi meal plan', 'khac gi thuc don dong goi', 'khac gi eat clean'],
+    reply:
+      'Thực đơn đóng gói giải quyết bữa ăn hôm nay, còn FIT AND CARE giúp bạn tự xây được thói ' +
+      'quen ăn đúng lâu dài, kể cả khi không còn nhận thực đơn nữa.',
+  },
+  {
+    id: 'compare_pt_community',
+    keywords: ['khac gi pt gym', 'khac gi cong dong giam can mien phi', 'khac gi hoi nhom giam can'],
+    reply:
+      'Thông tin miễn phí trên mạng thường chung chung, không chắc phù hợp với cơ địa và lối sống ' +
+      'riêng của bạn. FIT AND CARE cá nhân hóa theo đúng thói quen, công việc và sức khỏe thật ' +
+      'của từng người, có coach đồng hành theo sát chứ không phải tự mày mò.',
+  },
+  {
+    id: 'after_program_support',
+    keywords: ['sau khi het goi', 'ket thuc goi roi co ho tro khong', 'het goi roi co con nhom khong'],
+    reply:
+      'Có. Sau khi kết thúc gói, nhóm đồng hành cùng bạn vẫn duy trì — bạn có thể nhắn vào nhóm ' +
+      'khi cần, đội ngũ coach và chuyên gia sẽ hỗ trợ.',
+  },
 
   // --- Harvard (xem quy tắc claim ở categoryReply/exclusivity trong findFaqIntents) ---
   {
     id: 'harvard_training',
     keywords: ['harvard', 'harvard medical school', 'lien quan gi den harvard'],
     reply:
-      'Đội ngũ sáng lập FIT AND CARE đã hoàn thành các chương trình đào tạo liên quan đến sức ' +
-      'khỏe, dinh dưỡng và wellness coaching của Harvard Medical School. Một số kiến thức và ' +
-      'phương pháp từ quá trình đào tạo này được tham chiếu khi xây dựng nội dung và cách đồng ' +
-      'hành trong FIT AND CARE.',
+      'Đội ngũ coach và chuyên gia của FIT AND CARE được đào tạo về dinh dưỡng tại các trường đại ' +
+      'học Y ở Việt Nam, đồng thời có nền tảng đào tạo về sức khỏe, wellness và coaching từ ' +
+      'Harvard Medical School. Kiến thức và phương pháp từ quá trình đào tạo này được áp dụng khi ' +
+      'xây dựng nội dung và cách đồng hành trong FIT AND CARE.',
   },
   {
     id: 'harvard_certification',
     keywords: ['chung chi harvard', 'chung nhan harvard', 'duoc harvard chung nhan khong', 'tieu chuan harvard'],
     reply:
       'FIT AND CARE không phải là chương trình được Harvard Medical School chứng nhận hay bảo ' +
-      'trợ. Tuy nhiên, đội ngũ sáng lập FIT AND CARE đã hoàn thành các chương trình đào tạo liên ' +
-      'quan đến sức khỏe, dinh dưỡng và wellness coaching của Harvard Medical School, và có tham ' +
-      'chiếu những kiến thức, phương pháp phù hợp khi xây dựng chương trình.',
+      'trợ. Đội ngũ coach và chuyên gia của FIT AND CARE được đào tạo về dinh dưỡng tại các ' +
+      'trường đại học Y ở Việt Nam, đồng thời có nền tảng đào tạo về sức khỏe, wellness và ' +
+      'coaching từ Harvard Medical School, và áp dụng những kiến thức, phương pháp phù hợp khi ' +
+      'xây dựng chương trình.',
   },
 
   // --- Liên hệ ---

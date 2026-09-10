@@ -69,7 +69,7 @@ function check(description, condition) {
 
   // 4
   cs = await sendPrivate('c1', 'có trả góp không');
-  check('4. "có trả góp không" -> 3/6/9/12 tháng qua Visa', /3, 6, 9 hoặc 12 tháng qua thẻ Visa/.test(allText(cs)));
+  check('4. "có trả góp không" -> 3/6/9/12 tháng cho tất cả các gói', /3, 6, 9 hoặc 12 tháng cho tất cả các gói/.test(allText(cs)));
 
   // 5
   cs = await sendPrivate('c1', 'có hoàn tiền được không');
@@ -84,7 +84,7 @@ function check(description, condition) {
   check(
     '7. Harvard certification -> đúng KHÔNG chứng nhận + đào tạo, không lẫn harvard_training riêng',
     allText(cs).includes('không phải là chương trình được Harvard Medical School chứng nhận') &&
-      allText(cs).includes('đã hoàn thành các chương trình đào tạo') &&
+      allText(cs).includes('đại học Y ở Việt Nam') &&
       cs.filter((c) => c.fn === 'sendMessage').length === 1
   );
 
@@ -92,7 +92,7 @@ function check(description, condition) {
   cs = await sendPrivate('c1', 'FIT AND CARE liên quan gì đến Harvard?');
   check(
     '8. Harvard training -> đúng mối liên hệ đào tạo, KHÔNG có câu "chứng nhận"',
-    allText(cs).includes('đã hoàn thành các chương trình đào tạo') && !allText(cs).includes('chứng nhận')
+    allText(cs).includes('đại học Y ở Việt Nam') && !allText(cs).includes('chứng nhận')
   );
 
   // 9
