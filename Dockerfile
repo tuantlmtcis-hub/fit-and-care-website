@@ -9,6 +9,8 @@ COPY server.js ./
 COPY index.html ./
 COPY founder.html ./
 COPY team.html ./
+COPY mock-vnpay.html ./
+COPY thanh-toan-ket-qua.html ./
 COPY css ./css
 COPY js ./js
 COPY assets ./assets
