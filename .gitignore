@@ -4,5 +4,6 @@ logo.png
 node_modules/
 .env
 data/
+content-internal/
 
 .DS_Store

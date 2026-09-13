@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đội ngũ Coach &amp; Chuyên gia | FIT AND CARE</title>
+<meta name="description" content="Đội ngũ Coach &amp; Chuyên gia FIT AND CARE — được Founder trực tiếp đào tạo, đồng hành cùng bạn trong suốt chương trình.">
+<link rel="canonical" href="https://fitandcare-web.fly.dev/team.html">
+<meta name="theme-color" content="#0D2B5C">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FIT AND CARE">
+<meta property="og:locale" content="vi_VN">
+<meta property="og:url" content="https://fitandcare-web.fly.dev/team.html">
+<meta property="og:title" content="Đội ngũ Coach &amp; Chuyên gia | FIT AND CARE">
+<meta property="og:description" content="Đội ngũ Coach &amp; Chuyên gia FIT AND CARE — được Founder trực tiếp đào tạo, đồng hành cùng bạn trong suốt chương trình.">
+<meta property="og:image" content="https://fitandcare-web.fly.dev/assets/fitandcare-logo.png">
+
+<link rel="icon" href="assets/fitandcare-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="header" id="header">
+  <div class="container">
+    <a href="index.html" class="brand">
+      <img src="assets/fitandcare-logo.png" alt="FIT AND CARE">
+      <span>FIT AND <em>CARE</em><small>Smart Nutrition</small></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <div class="nav-item has-dropdown">
+        <button type="button" class="nav-dropdown-toggle" id="navAboutToggle" aria-expanded="false" aria-controls="navAboutMenu">
+          <span>Về chúng tôi</span>
+          <svg class="nav-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown" id="navAboutMenu">
+          <a href="index.html#gioi-thieu">Về FIT AND CARE</a>
+          <a href="founder.html">Nhà sáng lập</a>
+          <a href="team.html">Đội ngũ Coach &amp; Chuyên gia</a>
+        </div>
+      </div>
+      <a href="index.html#dich-vu">Dịch vụ</a>
+      <a href="index.html#quy-trinh">Quy trình</a>
+      <a href="index.html#goi-coaching">Gói Coaching</a>
+      <a href="index.html#cau-chuyen">Câu chuyện</a>
+      <a href="index.html#faq">Hỏi đáp</a>
+      <a href="#lien-he" class="btn btn-primary">Đặt lịch tư vấn</a>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#lien-he" class="btn btn-primary">Đặt lịch tư vấn</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Mở menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TEAM HERO ============ -->
+<section class="section team-hero">
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg>
+      Về trang chủ
+    </a>
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <div class="eyebrow">Đội ngũ FIT AND CARE</div>
+      <h1 style="font-size:clamp(28px,3.4vw,40px);margin-bottom:16px;">Đội ngũ Coach &amp; Chuyên gia</h1>
+      <p style="color:var(--muted);font-size:17px;">Founder trực tiếp xây dựng phương pháp và đào tạo đội ngũ. Coach làm việc theo quy trình và tài liệu chung, được giám sát chất lượng và cập nhật định kỳ; bên cạnh đó có sự tham gia của các coach/chuyên gia được đào tạo về dinh dưỡng từ các trường Đại học Y tại Việt Nam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM GRID ============ -->
+<section class="section-tight team-list">
+  <div class="container">
+    <div class="team-filters reveal" id="teamFilters">
+      <button type="button" class="team-filter active" data-filter="all">Tất cả</button>
+      <button type="button" class="team-filter" data-filter="coach">Coach</button>
+      <button type="button" class="team-filter" data-filter="chuyen-gia">Chuyên gia</button>
+      <button type="button" class="team-filter" data-filter="ctv">Cộng tác viên</button>
+    </div>
+    <div class="team-grid reveal" id="teamGrid"></div>
+  </div>
+</section>
+
+<!-- ============ TEAM DETAIL MODAL ============ -->
+<div class="team-modal-overlay" id="teamModal" aria-hidden="true">
+  <div class="team-modal-card" role="dialog" aria-modal="true" aria-labelledby="teamModalName">
+    <button type="button" class="team-modal-close" id="teamModalClose" aria-label="Đóng">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="teamModalBody"></div>
+  </div>
+</div>
+
+<!-- ============ CTA ============ -->
+<section class="section founder-cta">
+  <div class="container founder-cta-inner">
+    <h2>Muốn được đội ngũ FIT AND CARE tư vấn lộ trình phù hợp?</h2>
+    <a href="#lien-he" class="btn btn-primary">Đặt lịch tư vấn miễn phí</a>
+  </div>
+</section>
+
+<!-- ============ CONSULT MODAL ============ -->
+<div class="modal-overlay" id="consultModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button type="button" class="modal-close" id="modalClose" aria-label="Đóng">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="modal-body">
+      <div class="modal-info">
+        <div class="eyebrow">Đăng ký tư vấn</div>
+        <h3 id="modalTitle">Để lại thông tin, FIT AND CARE sẽ liên hệ lại với bạn</h3>
+        <p class="modal-lead">Đội ngũ FIT AND CARE sẽ liên hệ trong thời gian sớm nhất để tư vấn lộ trình phù hợp.</p>
+        <ul class="contact-info-list">
+          <li>
+            <span class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.4 2.1L8 10.1a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.6 2z"/></svg></span>
+            <div><strong>0393 272 286</strong><span>Zalo / Hotline &ndash; hỗ trợ 24/7</span></div>
+          </li>
+          <li>
+            <span class="ci-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.7 3.66 15.7 3.5 14.5 3.5c-2.4 0-4 1.46-4 4.14V10H7.8v3.1h2.7v8h3z"/></svg></span>
+            <div><strong>FIT AND CARE &ndash; Học ăn thông minh</strong><span>Fanpage chính thức</span></div>
+          </li>
+        </ul>
+        <p class="contact-privacy-note">Thông tin bạn cung cấp chỉ được FIT AND CARE sử dụng để liên hệ tư vấn, không chia sẻ cho bên thứ ba.</p>
+      </div>
+
+      <form class="consult-form" id="consultForm" novalidate>
+        <div class="form-row">
+          <label for="cf-name">Họ và tên <span class="req">*</span></label>
+          <input type="text" id="cf-name" name="name" autocomplete="name">
+          <span class="form-error" id="err-name"></span>
+        </div>
+        <div class="form-row-group">
+          <div class="form-row">
+            <label for="cf-phone">Số điện thoại <span class="req">*</span></label>
+            <input type="tel" id="cf-phone" name="phone" autocomplete="tel" inputmode="tel">
+            <span class="form-error" id="err-phone"></span>
+          </div>
+          <div class="form-row">
+            <label for="cf-email">Email <span class="req">*</span></label>
+            <input type="email" id="cf-email" name="email" autocomplete="email">
+            <span class="form-error" id="err-email"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="cf-goal">Mục tiêu của bạn</label>
+          <select id="cf-goal" name="goal">
+            <option value="">-- Chọn mục tiêu (không bắt buộc) --</option>
+            <option>Giảm cân khoa học</option>
+            <option>Xây dựng thói quen ăn uống lành mạnh</option>
+            <option>Cải thiện sức khỏe &amp; vóc dáng</option>
+            <option>Coaching 1:1 dài hạn</option>
+            <option>Khác</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="cf-message">Nội dung cần tư vấn</label>
+          <textarea id="cf-message" name="message" rows="3" placeholder="Chia sẻ thêm về tình trạng hiện tại hoặc điều bạn đang gặp khó khăn..."></textarea>
+        </div>
+        <label class="form-check">
+          <input type="checkbox" id="cf-consent" name="consent">
+          <span>Tôi đồng ý để FIT AND CARE liên hệ lại theo thông tin đã cung cấp <span class="req">*</span></span>
+        </label>
+        <span class="form-error" id="err-consent"></span>
+
+        <button type="submit" class="btn btn-primary btn-block">Gửi đăng ký tư vấn</button>
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="footer-brand">
+          <img src="assets/fitandcare-logo.png" alt="FIT AND CARE">
+          FIT AND CARE
+        </a>
+        <p class="footer-desc">Thương hiệu dinh dưỡng thông minh, đồng hành cùng bạn xây dựng thói quen dinh dưỡng lành mạnh và lối sống khỏe mạnh mỗi ngày.</p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/FITANDCAREHN?locale=vi_VN" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.7 3.66 15.7 3.5 14.5 3.5c-2.4 0-4 1.46-4 4.14V10H7.8v3.1h2.7v8h3z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Khám phá</h4>
+        <ul>
+          <li><a href="index.html#gioi-thieu">Về FIT AND CARE</a></li>
+          <li><a href="founder.html">Nhà sáng lập</a></li>
+          <li><a href="team.html">Đội ngũ Coach &amp; Chuyên gia</a></li>
+          <li><a href="index.html#dich-vu">Dịch vụ</a></li>
+          <li><a href="index.html#quy-trinh">Quy trình</a></li>
+          <li><a href="index.html#goi-coaching">Gói Coaching</a></li>
+          <li><a href="index.html#cau-chuyen">Câu chuyện</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Dịch vụ</h4>
+        <ul>
+          <li><a href="index.html#dich-vu">Coach đồng hành</a></li>
+          <li><a href="index.html#dich-vu">Theo dõi bữa ăn</a></li>
+          <li><a href="index.html#dich-vu">Dinh dưỡng &amp; vận động</a></li>
+          <li><a href="index.html#dich-vu">Theo dõi chỉ số</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul class="footer-contact">
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.4 2.1L8 10.1a16 16 0 0 0 6 6l1.4-1.4a2 2 0 0 1 2.1-.4c.9.4 1.9.6 2.9.7a2 2 0 0 1 1.6 2z"/></svg>
+            <span>0393 272 286 (Zalo/Hotline)</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V8c0-.9.25-1.5 1.55-1.5H17V3.7C16.7 3.66 15.7 3.5 14.5 3.5c-2.4 0-4 1.46-4 4.14V10H7.8v3.1h2.7v8h3z"/></svg>
+            <span>Fanpage: FIT AND CARE &ndash; Học ăn thông minh</span>
+          </li>
+          <li>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+            <span>Chương trình triển khai chủ yếu online</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 FIT AND CARE. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản sử dụng</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Lên đầu trang">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="js/script.js"></script>
+<script>
+/* Data-driven team roster — real profiles can be appended here later without touching layout code. */
+document.addEventListener('DOMContentLoaded', () => {
+  const TEAM_MEMBERS = [
+    {
+      id: 'huong-giang',
+      type: 'founder',
+      name: 'TS. Đỗ Hương Giang',
+      role: 'Founder FIT AND CARE',
+      photo: 'assets/founder/huong-giang-portrait.jpg',
+      points: [
+        'Giảng viên Trường Đại học Ngoại thương',
+        '3 chương trình Health &amp; Wellness / Lifestyle Coaching / Nutrition Coaching &ndash; Harvard Medical School',
+        'Xây dựng phương pháp và trực tiếp đào tạo đội ngũ coach FIT AND CARE',
+      ],
+      detail: 'Founder trực tiếp xây dựng triết lý, phương pháp và định hướng chuyên môn của FIT AND CARE; thiết kế chương trình, đào tạo đội ngũ coach/chuyên gia và trực tiếp đồng hành với một số khách hàng cần cá nhân hóa sâu.',
+      link: { href: 'founder.html', label: 'Xem hồ sơ Nhà sáng lập' },
+    },
+    {
+      id: 'demo-coach',
+      type: 'coach',
+      name: 'Coach FIT AND CARE',
+      role: 'Coach',
+      photo: null,
+      initials: 'C',
+      badge: 'Hồ sơ đang cập nhật',
+      detail: 'Hồ sơ của coach này đang được FIT AND CARE cập nhật. Đây là thẻ minh họa cho cách hiển thị hồ sơ đội ngũ, chưa gắn với một cá nhân cụ thể.',
+    },
+    {
+      id: 'demo-chuyen-gia',
+      type: 'chuyen-gia',
+      name: 'Chuyên gia FIT AND CARE',
+      role: 'Chuyên gia',
+      photo: null,
+      initials: 'CG',
+      badge: 'Hồ sơ đang cập nhật',
+      detail: 'Hồ sơ của chuyên gia này đang được FIT AND CARE cập nhật. Đây là thẻ minh họa cho cách hiển thị hồ sơ đội ngũ, chưa gắn với một cá nhân cụ thể.',
+    },
+    {
+      id: 'demo-ctv',
+      type: 'ctv',
+      name: 'Cộng tác viên FIT AND CARE',
+      role: 'Cộng tác viên',
+      photo: null,
+      initials: 'CTV',
+      badge: 'Hồ sơ đang cập nhật',
+      detail: 'Hồ sơ của cộng tác viên này đang được FIT AND CARE cập nhật. Đây là thẻ minh họa cho cách hiển thị hồ sơ đội ngũ, chưa gắn với một cá nhân cụ thể.',
+    },
+  ];
+
+  const grid = document.getElementById('teamGrid');
+  if (!grid) return;
+
+  const cardHTML = (m) => `
+    <button type="button" class="team-card" data-type="${m.type}" data-id="${m.id}">
+      ${m.photo ? `<img class="team-card-photo" src="${m.photo}" alt="${m.name}">` : `<div class="team-card-placeholder">${m.initials}</div>`}
+      <h3>${m.name}</h3>
+      <span class="team-card-role">${m.role}</span>
+      ${m.points ? `<ul class="team-card-points">${m.points.map(p => `<li>${p}</li>`).join('')}</ul>` : ''}
+      ${m.badge ? `<span class="team-card-badge">${m.badge}</span>` : ''}
+    </button>
+  `;
+  grid.innerHTML = TEAM_MEMBERS.map(cardHTML).join('');
+
+  /* Filters */
+  const filters = document.getElementById('teamFilters');
+  const cards = grid.querySelectorAll('.team-card');
+  filters.addEventListener('click', (e) => {
+    const btn = e.target.closest('.team-filter');
+    if (!btn) return;
+    filters.querySelectorAll('.team-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    cards.forEach(card => {
+      const match = filter === 'all' || card.dataset.type === filter;
+      card.classList.toggle('tt-hidden', !match);
+      if (match) {
+        card.classList.remove('tm-fade-in');
+        void card.offsetWidth;
+        card.classList.add('tm-fade-in');
+      }
+    });
+  });
+
+  /* Detail modal */
+  const modal = document.getElementById('teamModal');
+  const modalBody = document.getElementById('teamModalBody');
+  const modalClose = document.getElementById('teamModalClose');
+  let lastFocusedTeam = null;
+
+  const openTeamModal = (member) => {
+    modalBody.innerHTML = `
+      ${member.photo ? `<img src="${member.photo}" alt="${member.name}">` : `<div class="team-card-placeholder">${member.initials}</div>`}
+      <h3 id="teamModalName">${member.name}</h3>
+      <span class="team-card-role">${member.role}</span>
+      ${member.badge ? `<p class="team-card-badge" style="margin-top:10px;">${member.badge}</p>` : ''}
+      <p style="margin-top:16px;color:var(--muted);font-size:14.5px;">${member.detail}</p>
+      ${member.link ? `<a href="${member.link.href}" class="btn btn-outline" style="margin-top:20px;">${member.link.label}</a>` : ''}
+    `;
+    lastFocusedTeam = document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  };
+  const closeTeamModal = () => {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    if (lastFocusedTeam) lastFocusedTeam.focus();
+  };
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const member = TEAM_MEMBERS.find(m => m.id === card.dataset.id);
+      if (member) openTeamModal(member);
+    });
+  });
+  modalClose.addEventListener('click', closeTeamModal);
+  modal.addEventListener('click', (e) => { if (e.target === modal) closeTeamModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('open')) closeTeamModal(); });
+});
+</script>
+</body>
+</html>

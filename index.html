@@ -38,12 +38,22 @@
     </a>
 
     <nav class="nav" id="nav">
-      <a href="#gioi-thieu">Về chúng tôi</a>
-      <a href="#dich-vu">Dịch vụ</a>
-      <a href="#quy-trinh">Quy trình</a>
-      <a href="#goi-coaching">Gói Coaching</a>
-      <a href="#cau-chuyen">Câu chuyện</a>
-      <a href="#faq">Hỏi đáp</a>
+      <div class="nav-item has-dropdown">
+        <button type="button" class="nav-dropdown-toggle" id="navAboutToggle" aria-expanded="false" aria-controls="navAboutMenu">
+          <span>Về chúng tôi</span>
+          <svg class="nav-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown" id="navAboutMenu">
+          <a href="index.html#gioi-thieu">Về FIT AND CARE</a>
+          <a href="founder.html">Nhà sáng lập</a>
+          <a href="team.html">Đội ngũ Coach &amp; Chuyên gia</a>
+        </div>
+      </div>
+      <a href="index.html#dich-vu">Dịch vụ</a>
+      <a href="index.html#quy-trinh">Quy trình</a>
+      <a href="index.html#goi-coaching">Gói Coaching</a>
+      <a href="index.html#cau-chuyen">Câu chuyện</a>
+      <a href="index.html#faq">Hỏi đáp</a>
       <a href="#lien-he" class="btn btn-primary">Đặt lịch tư vấn</a>
     </nav>
 
@@ -259,7 +269,7 @@
     </div>
 
     <div class="program-cta-wrap reveal">
-      <a href="#goi-coaching" class="btn btn-primary">Xem các gói &amp; học phí
+      <a href="#goi-coaching" class="btn btn-primary">Xem các gói đồng hành
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -302,6 +312,63 @@
           <p>&ldquo;Healthy life, Happy you!&rdquo;</p>
         </div>
       </div>
+    </div>
+
+    <div class="founder-teaser reveal">
+      <img src="assets/founder/huong-giang-portrait.jpg" alt="TS. Đỗ Hương Giang – Founder FIT AND CARE" class="founder-teaser-photo">
+      <div class="founder-teaser-body">
+        <span class="founder-teaser-eyebrow">Người sáng lập</span>
+        <h3>TS. Đỗ Hương Giang</h3>
+        <p class="founder-teaser-role">Founder FIT AND CARE &middot; Giảng viên Trường Đại học Ngoại thương</p>
+        <p class="founder-teaser-role-sub">Health &amp; Wellness Coach &middot; Lifestyle &amp; Wellness Coach &middot; Nutrition &amp; Wellness Coach</p>
+        <a href="founder.html" class="btn btn-outline">Tìm hiểu về Nhà sáng lập</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM TEASER ============ -->
+<section class="section team-teaser" id="doi-ngu">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Đội ngũ đồng hành</div>
+      <h2>Những người đồng hành cùng bạn tại FIT AND CARE</h2>
+      <p>Founder trực tiếp xây dựng phương pháp và đào tạo đội ngũ, cùng các coach/chuyên gia đồng hành sát với bạn trong suốt chương trình.</p>
+    </div>
+
+    <div class="tt-track-wrap reveal">
+      <div class="tt-track" id="ttTrack">
+        <div class="tt-card tt-real">
+          <img src="assets/founder/huong-giang-portrait.jpg" alt="TS. Đỗ Hương Giang" class="tt-photo">
+          <h3>TS. Đỗ Hương Giang</h3>
+          <span class="tt-role">Founder FIT AND CARE</span>
+          <ul class="tt-points">
+            <li>Giảng viên Trường Đại học Ngoại thương</li>
+            <li>3 chương trình Health &amp; Wellness / Lifestyle Coaching / Nutrition Coaching &ndash; Harvard Medical School</li>
+            <li>Xây dựng phương pháp và trực tiếp đào tạo đội ngũ coach FIT AND CARE</li>
+          </ul>
+        </div>
+        <div class="tt-card tt-demo">
+          <div class="tt-avatar-placeholder">C</div>
+          <h3>Coach đồng hành</h3>
+          <span class="tt-role">Coach FIT AND CARE</span>
+          <span class="tt-badge">Hồ sơ đang cập nhật</span>
+        </div>
+        <div class="tt-card tt-demo">
+          <div class="tt-avatar-placeholder">CG</div>
+          <h3>Chuyên gia dinh dưỡng</h3>
+          <span class="tt-role">Chuyên gia FIT AND CARE</span>
+          <span class="tt-badge">Hồ sơ đang cập nhật</span>
+        </div>
+      </div>
+      <div class="tt-controls">
+        <button id="ttPrev" aria-label="Trước"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button id="ttNext" aria-label="Sau"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+    </div>
+
+    <div class="tt-cta-wrap reveal">
+      <a href="team.html" class="btn btn-primary">Xem toàn bộ đội ngũ</a>
     </div>
   </div>
 </section>
@@ -354,7 +421,6 @@
         <div class="pricing-tag">Gói khởi động</div>
         <h3 class="pricing-name">Start Fit</h3>
         <div class="pricing-duration">1 tháng</div>
-        <div class="pricing-amount">13.333.333<span>VNĐ</span></div>
         <ul class="pricing-features">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg><span>Tặng cân sinh học kết nối App</span></li>
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg><span>Zoom 1:1 cùng chuyên gia</span></li>
@@ -364,8 +430,7 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 3&ndash;4kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <button type="button" class="btn btn-primary open-payment" data-package="start">Thanh toán ngay</button>
-          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
+          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
         </div>
       </div>
 
@@ -373,7 +438,6 @@
         <div class="pricing-tag">Gói tăng tốc</div>
         <h3 class="pricing-name">Smart Fit</h3>
         <div class="pricing-duration">2 tháng</div>
-        <div class="pricing-amount">23.333.333<span>VNĐ</span></div>
         <p class="pricing-includes">Bao gồm toàn bộ quyền lợi gói Start Fit</p>
         <ul class="pricing-features">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg><span>Đánh giá tiến độ giữa kỳ</span></li>
@@ -382,8 +446,7 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 4&ndash;7kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <button type="button" class="btn btn-primary open-payment" data-package="smart">Thanh toán ngay</button>
-          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
+          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
         </div>
       </div>
 
@@ -391,7 +454,6 @@
         <div class="pricing-tag">Gói chuyển đổi toàn diện</div>
         <h3 class="pricing-name">Super Fit</h3>
         <div class="pricing-duration">3 tháng</div>
-        <div class="pricing-amount">33.333.333<span>VNĐ</span></div>
         <p class="pricing-includes">Bao gồm toàn bộ quyền lợi gói Smart Fit</p>
         <ul class="pricing-features">
           <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6L9 17l-5-5"/></svg><span>Hình thành thói quen ăn uống bền vững</span></li>
@@ -399,8 +461,7 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 7&ndash;10kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <button type="button" class="btn btn-primary open-payment" data-package="super">Thanh toán ngay</button>
-          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
+          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
         </div>
       </div>
     </div>
@@ -411,7 +472,7 @@
       <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M21 7v6"/></svg><span>Hiệu quả &ndash; Đo lường được</span></div>
       <div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6c-1.9-1.9-5-1.9-6.9 0L12 6.5l-1.9-1.9c-1.9-1.9-5-1.9-6.9 0-1.9 1.9-1.9 5 0 6.9L12 20.3l8.8-8.8c1.9-1.9 1.9-5 0-6.9z"/></svg><span>Bền vững</span></div>
     </div>
-    <p class="package-disclaimer">*Học phí trên áp dụng cho chương trình tiêu chuẩn, có thể được tư vấn điều chỉnh theo tình trạng sức khỏe và mục tiêu cụ thể của từng khách hàng. Kết quả giảm cân chỉ mang tính tham khảo, phụ thuộc vào từng người (cơ địa, tình trạng ban đầu, mức độ tuân thủ) và không phải cam kết một số kg cố định.</p>
+    <p class="package-disclaimer">*Chương trình được tư vấn và điều chỉnh theo tình trạng sức khỏe và mục tiêu cụ thể của từng khách hàng. Kết quả giảm cân chỉ mang tính tham khảo, phụ thuộc vào từng người (cơ địa, tình trạng ban đầu, mức độ tuân thủ) và không phải cam kết một số kg cố định.</p>
   </div>
 </section>
 
@@ -710,17 +771,14 @@
             <label class="pkg-option">
               <input type="radio" name="pkg" value="start">
               <span class="pkg-option-name">Start Fit</span>
-              <span class="pkg-option-price">13.333.333đ</span>
             </label>
             <label class="pkg-option">
               <input type="radio" name="pkg" value="smart">
               <span class="pkg-option-name">Smart Fit</span>
-              <span class="pkg-option-price">23.333.333đ</span>
             </label>
             <label class="pkg-option">
               <input type="radio" name="pkg" value="super">
               <span class="pkg-option-name">Super Fit</span>
-              <span class="pkg-option-price">33.333.333đ</span>
             </label>
           </div>
           <span class="form-error" id="err-pkg"></span>
@@ -801,21 +859,23 @@
       <div class="footer-col">
         <h4>Khám phá</h4>
         <ul>
-          <li><a href="#gioi-thieu">Về chúng tôi</a></li>
-          <li><a href="#dich-vu">Dịch vụ</a></li>
-          <li><a href="#quy-trinh">Quy trình</a></li>
-          <li><a href="#goi-coaching">Gói Coaching</a></li>
-          <li><a href="#cau-chuyen">Câu chuyện</a></li>
+          <li><a href="index.html#gioi-thieu">Về FIT AND CARE</a></li>
+          <li><a href="founder.html">Nhà sáng lập</a></li>
+          <li><a href="team.html">Đội ngũ Coach &amp; Chuyên gia</a></li>
+          <li><a href="index.html#dich-vu">Dịch vụ</a></li>
+          <li><a href="index.html#quy-trinh">Quy trình</a></li>
+          <li><a href="index.html#goi-coaching">Gói Coaching</a></li>
+          <li><a href="index.html#cau-chuyen">Câu chuyện</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Dịch vụ</h4>
         <ul>
-          <li><a href="#dich-vu">Coach đồng hành</a></li>
-          <li><a href="#dich-vu">Theo dõi bữa ăn</a></li>
-          <li><a href="#dich-vu">Dinh dưỡng &amp; vận động</a></li>
-          <li><a href="#dich-vu">Theo dõi chỉ số</a></li>
+          <li><a href="index.html#dich-vu">Coach đồng hành</a></li>
+          <li><a href="index.html#dich-vu">Theo dõi bữa ăn</a></li>
+          <li><a href="index.html#dich-vu">Dinh dưỡng &amp; vận động</a></li>
+          <li><a href="index.html#dich-vu">Theo dõi chỉ số</a></li>
         </ul>
       </div>
 

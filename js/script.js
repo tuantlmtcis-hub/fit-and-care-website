@@ -21,6 +21,27 @@ document.addEventListener('DOMContentLoaded', () => {
     a.addEventListener('click', () => nav.classList.remove('open'));
   });
 
+  /* "Về chúng tôi" dropdown: click/tap toggle + Escape/outside-click to close */
+  const navAboutToggle = document.getElementById('navAboutToggle');
+  if (navAboutToggle) {
+    const navAboutItem = navAboutToggle.closest('.nav-item');
+    const closeNavAbout = () => {
+      navAboutItem.classList.remove('open');
+      navAboutToggle.setAttribute('aria-expanded', 'false');
+    };
+    navAboutToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navAboutItem.classList.toggle('open');
+      navAboutToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    document.addEventListener('click', (e) => {
+      if (!navAboutItem.contains(e.target)) closeNavAbout();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNavAbout();
+    });
+  }
+
   /* FAQ accordion */
   const faqItems = document.querySelectorAll('.faq-item');
   const setFaqHeight = (item, open) => {
@@ -36,17 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* Testimonial track controls */
+  /* Testimonial track controls (homepage only) */
   const tmTrack = document.getElementById('tmTrack');
   const tmPrev = document.getElementById('tmPrev');
   const tmNext = document.getElementById('tmNext');
-  const scrollAmount = () => (tmTrack.querySelector('.tm-card')?.offsetWidth || 300) + 24;
-  tmPrev.addEventListener('click', () => tmTrack.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
-  tmNext.addEventListener('click', () => tmTrack.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
+  if (tmTrack && tmPrev && tmNext) {
+    const scrollAmount = () => (tmTrack.querySelector('.tm-card')?.offsetWidth || 300) + 24;
+    tmPrev.addEventListener('click', () => tmTrack.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
+    tmNext.addEventListener('click', () => tmTrack.scrollBy({ left: scrollAmount(), behavior: 'smooth' }));
+  }
 
   /* Testimonial category filter */
   const tmFilters = document.getElementById('tmFilters');
-  if (tmFilters) {
+  if (tmFilters && tmTrack) {
     const tmCards = tmTrack.querySelectorAll('.tm-card');
     tmFilters.addEventListener('click', (e) => {
       const btn = e.target.closest('.tm-filter');
@@ -65,6 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       tmTrack.scrollTo({ left: 0, behavior: 'smooth' });
     });
+  }
+
+  /* Team teaser track controls (homepage "Đội ngũ đồng hành") */
+  const ttTrack = document.getElementById('ttTrack');
+  const ttPrev = document.getElementById('ttPrev');
+  const ttNext = document.getElementById('ttNext');
+  if (ttTrack && ttPrev && ttNext) {
+    const ttScrollAmount = () => (ttTrack.querySelector('.tt-card')?.offsetWidth || 300) + 24;
+    ttPrev.addEventListener('click', () => ttTrack.scrollBy({ left: -ttScrollAmount(), behavior: 'smooth' }));
+    ttNext.addEventListener('click', () => ttTrack.scrollBy({ left: ttScrollAmount(), behavior: 'smooth' }));
   }
 
   /* Consultation modal open/close */
@@ -194,14 +227,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* Payment modal: chọn gói + thanh toán */
+  /* Payment modal: chọn gói + thanh toán (index.html only) */
   const paymentModal = document.getElementById('paymentModal');
+  if (paymentModal) {
   const paymentModalClose = document.getElementById('paymentModalClose');
   const paymentForm = document.getElementById('paymentForm');
   const bankResult = document.getElementById('bankResult');
   let lastFocusedPayment = null;
-
-  const PACKAGE_LABELS = { start: 'Start Fit', smart: 'Smart Fit', super: 'Super Fit' };
 
   const resetPaymentModal = () => {
     paymentForm.hidden = false;
@@ -350,6 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  } // end if (paymentModal)
 
   /* Reveal on scroll */
   const revealEls = document.querySelectorAll('.reveal');

@@ -7,6 +7,8 @@ RUN npm install --omit=dev
 
 COPY server.js ./
 COPY index.html ./
+COPY founder.html ./
+COPY team.html ./
 COPY css ./css
 COPY js ./js
 COPY assets ./assets
