@@ -508,7 +508,12 @@ body.modal-open{overflow:hidden;}
 /* ============ Payment modal ============ */
 .modal-card-payment{max-width:560px;}
 .modal-body-payment .eyebrow{margin-bottom:10px;}
-.modal-body-payment h3{font-size:21px;margin-bottom:22px;}
+.modal-body-payment h3{font-size:21px;margin-bottom:16px;}
+.payment-notice{
+  margin-bottom:22px;padding:14px 18px;border-left:4px solid var(--yellow-2);background:var(--gray-bg);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:13.5px;line-height:1.6;color:var(--navy);
+}
+.payment-notice em{display:block;margin-top:4px;font-style:normal;font-size:12px;color:var(--muted);}
 #paymentForm{display:flex;flex-direction:column;gap:16px;}
 #paymentForm[hidden]{display:none;}
 

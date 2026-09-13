@@ -430,7 +430,8 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 3&ndash;4kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
+          <button type="button" class="btn btn-primary open-payment" data-package="start">Thanh toán ngay</button>
+          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
         </div>
       </div>
 
@@ -446,7 +447,8 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 4&ndash;7kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
+          <button type="button" class="btn btn-primary open-payment" data-package="smart">Thanh toán ngay</button>
+          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
         </div>
       </div>
 
@@ -461,7 +463,8 @@
         </ul>
         <div class="pricing-result"><strong>Giảm 7&ndash;10kg</strong><span>Kết quả trung bình</span></div>
         <div class="pricing-actions">
-          <a href="#lien-he" class="btn btn-primary">Nhận tư vấn gói phù hợp</a>
+          <button type="button" class="btn btn-primary open-payment" data-package="super">Thanh toán ngay</button>
+          <a href="#lien-he" class="btn btn-text">Tư vấn trước khi đăng ký</a>
         </div>
       </div>
     </div>
@@ -764,9 +767,11 @@
       <div class="eyebrow">Đăng ký &amp; thanh toán</div>
       <h3 id="paymentModalTitle">Hoàn tất đăng ký gói dịch vụ</h3>
 
+      <p class="payment-notice">Vui lòng liên hệ FIT AND CARE để được tư vấn và xác nhận số tiền cần thanh toán trước khi thực hiện giao dịch.<br><em>Số tiền sẽ được FIT AND CARE xác nhận riêng sau khi tư vấn.</em></p>
+
       <form id="paymentForm" novalidate>
         <div class="form-row">
-          <label>Chọn gói <span class="req">*</span></label>
+          <label>Gói đã chọn <span class="req">*</span></label>
           <div class="pkg-select">
             <label class="pkg-option">
               <input type="radio" name="pkg" value="start">
@@ -782,6 +787,12 @@
             </label>
           </div>
           <span class="form-error" id="err-pkg"></span>
+        </div>
+
+        <div class="form-row">
+          <label for="pf-amount">Số tiền thanh toán (VNĐ) <span class="req">*</span></label>
+          <input type="text" id="pf-amount" inputmode="numeric" autocomplete="off" placeholder="Nhập số tiền đã được FIT AND CARE xác nhận">
+          <span class="form-error" id="err-pf-amount"></span>
         </div>
 
         <div class="form-row-group">

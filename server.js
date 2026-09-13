@@ -348,8 +348,18 @@ app.post('/api/consult', async (req, res) => {
 });
 
 // ---------- API: tạo đơn hàng (chọn gói + thanh toán) ----------
+// Chỉ chấp nhận số tiền do khách tự nhập (đã được FIT AND CARE tư vấn/xác nhận riêng),
+// không bao giờ tự ghi đè bằng PACKAGES[...].amount — tránh lộ giá cố định qua public API.
+function parsePositiveIntegerAmount(raw) {
+  if (typeof raw !== 'string' && typeof raw !== 'number') return null;
+  if (typeof raw === 'string' && !/^\d+$/.test(raw.trim())) return null;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n <= 0) return null;
+  return n;
+}
+
 app.post('/api/order', async (req, res) => {
-  const { name, phone, email, package: pkgKey, method } = req.body || {};
+  const { name, phone, email, package: pkgKey, amount: rawAmount, method } = req.body || {};
 
   if (!name || String(name).trim().length < 2) {
     return res.status(400).json({ ok: false, error: 'Họ tên không hợp lệ' });
@@ -364,6 +374,10 @@ app.post('/api/order', async (req, res) => {
   if (!pkg) {
     return res.status(400).json({ ok: false, error: 'Vui lòng chọn 1 gói dịch vụ' });
   }
+  const amount = parsePositiveIntegerAmount(rawAmount);
+  if (amount === null) {
+    return res.status(400).json({ ok: false, error: 'Số tiền thanh toán không hợp lệ. Vui lòng nhập số nguyên dương (VNĐ) đã được FIT AND CARE xác nhận.' });
+  }
   if (!['vnpay', 'bank_transfer'].includes(method)) {
     return res.status(400).json({ ok: false, error: 'Vui lòng chọn phương thức thanh toán' });
   }
@@ -376,7 +390,7 @@ app.post('/api/order', async (req, res) => {
     id,
     package: pkgKey,
     packageName: pkg.name,
-    amount: pkg.amount,
+    amount,
     name: String(name).trim(),
     phone: String(phone).trim(),
     email: String(email).trim(),
@@ -411,7 +425,7 @@ app.post('/api/order', async (req, res) => {
       account: BANK_ACCOUNT_NUMBER,
       holder: BANK_ACCOUNT_HOLDER,
       content: id,
-      amount: pkg.amount,
+      amount,
     },
   });
 });

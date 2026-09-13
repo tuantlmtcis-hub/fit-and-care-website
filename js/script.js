@@ -233,6 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const paymentModalClose = document.getElementById('paymentModalClose');
   const paymentForm = document.getElementById('paymentForm');
   const bankResult = document.getElementById('bankResult');
+  const paymentModalTitle = document.getElementById('paymentModalTitle');
+  const defaultPaymentModalTitle = paymentModalTitle ? paymentModalTitle.textContent : '';
+  const PACKAGE_LABELS = { start: 'Start Fit', smart: 'Smart Fit', super: 'Super Fit' };
   let lastFocusedPayment = null;
 
   const resetPaymentModal = () => {
@@ -243,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('paymentFormStatus').className = 'form-status';
     document.getElementById('bankConfirmStatus').textContent = '';
     document.getElementById('bankConfirmStatus').className = 'form-status';
-    ['pkg', 'pf-name', 'pf-phone', 'pf-email', 'method'].forEach(id => {
+    ['pkg', 'pf-name', 'pf-phone', 'pf-email', 'pf-amount', 'method'].forEach(id => {
       const err = document.getElementById('err-' + id);
       if (err) { err.textContent = ''; err.classList.remove('show'); }
     });
@@ -254,6 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (preselectPackage) {
       const radio = paymentForm.querySelector(`input[name="pkg"][value="${preselectPackage}"]`);
       if (radio) radio.checked = true;
+    }
+    if (paymentModalTitle) {
+      paymentModalTitle.textContent = PACKAGE_LABELS[preselectPackage]
+        ? `Hoàn tất đăng ký gói ${PACKAGE_LABELS[preselectPackage]}`
+        : defaultPaymentModalTitle;
     }
     lastFocusedPayment = document.activeElement;
     paymentModal.classList.add('open');
@@ -285,18 +293,73 @@ document.addEventListener('DOMContentLoaded', () => {
     const pfName = document.getElementById('pf-name');
     const pfPhone = document.getElementById('pf-phone');
     const pfEmail = document.getElementById('pf-email');
+    const pfAmount = document.getElementById('pf-amount');
     const setErr = (id, message) => {
       const err = document.getElementById('err-' + id);
       if (!err) return;
       err.textContent = message || '';
       err.classList.toggle('show', Boolean(message));
     };
+
+    // Ô số tiền: nội dung sai KHÔNG BAO GIỜ bị âm thầm "sửa" thành một số khác (vd 5000.5 không
+    // được biến thành 50005, -5000 không được biến thành 5000). Khi nội dung không phải số nguyên
+    // hợp lệ (thuần số, hoặc có phân cách hàng nghìn đúng chuẩn từng nhóm 3 số), ta để nguyên đúng
+    // những gì người dùng đã gõ/dán và chỉ báo lỗi rõ ràng — không tự trích/ghép lại chữ số.
+    const AMOUNT_PLAIN_DIGITS_RE = /^\d+$/;
+    const AMOUNT_THOUSANDS_DOT_RE = /^\d{1,3}(\.\d{3})+$/;   // vd 5.000.000
+    const AMOUNT_THOUSANDS_COMMA_RE = /^\d{1,3}(,\d{3})+$/;  // vd 5,000,000
+    const normalizeAmountText = (text) => {
+      const t = String(text || '').trim();
+      if (AMOUNT_PLAIN_DIGITS_RE.test(t)) return t;
+      if (AMOUNT_THOUSANDS_DOT_RE.test(t)) return t.replace(/\./g, '');
+      if (AMOUNT_THOUSANDS_COMMA_RE.test(t)) return t.replace(/,/g, '');
+      return null;
+    };
+    if (pfAmount) {
+      const formatDigits = (digits) => (digits ? Number(digits).toLocaleString('vi-VN') : '');
+
+      pfAmount.addEventListener('input', (e) => {
+        // Dán nguyên một số đã có phân cách hàng nghìn hợp lệ (chấm hoặc phẩy): chuẩn hoá hiển thị
+        // ngay vì đây là một thao tác trọn vẹn, không phải đang gõ dở.
+        if (e.inputType === 'insertFromPaste') {
+          const clean = normalizeAmountText(pfAmount.value);
+          if (clean !== null) {
+            pfAmount.value = formatDigits(clean);
+            setErr('pf-amount', '');
+            return;
+          }
+        }
+        // Đang gõ tay: không viết lại nội dung ô (tránh làm sai lệch ý người dùng đang gõ dở),
+        // chỉ kiểm tra và báo lỗi ngay nếu nội dung hiện chưa phải số nguyên hợp lệ.
+        if (pfAmount.value.trim() === '') { setErr('pf-amount', ''); return; }
+        setErr(
+          'pf-amount',
+          normalizeAmountText(pfAmount.value) === null
+            ? 'Số tiền không hợp lệ. Chỉ nhập số nguyên VNĐ (không chữ, không dấu thập phân, không dấu âm).'
+            : ''
+        );
+      });
+
+      // Khi rời khỏi ô (đã gõ xong): nếu hợp lệ thì format lại dấu phân cách hàng nghìn cho dễ đọc.
+      pfAmount.addEventListener('blur', () => {
+        const clean = normalizeAmountText(pfAmount.value);
+        if (clean !== null) pfAmount.value = formatDigits(clean);
+      });
+    }
+    const parseAmountValue = () => {
+      const clean = pfAmount ? normalizeAmountText(pfAmount.value) : null;
+      if (clean === null) return null;
+      const n = parseInt(clean, 10);
+      return Number.isFinite(n) && n > 0 ? n : null;
+    };
+
     const validatePayment = () => {
       let valid = true;
       if (!paymentForm.querySelector('input[name="pkg"]:checked')) { setErr('pkg', 'Vui lòng chọn 1 gói dịch vụ'); valid = false; } else setErr('pkg', '');
       if (pfName.value.trim().length < 2) { setErr('pf-name', 'Vui lòng nhập họ tên đầy đủ'); valid = false; } else setErr('pf-name', '');
       if (!phoneRe.test(pfPhone.value.trim())) { setErr('pf-phone', 'Số điện thoại không hợp lệ'); valid = false; } else setErr('pf-phone', '');
       if (!emailRe.test(pfEmail.value.trim())) { setErr('pf-email', 'Email không hợp lệ'); valid = false; } else setErr('pf-email', '');
+      if (parseAmountValue() === null) { setErr('pf-amount', 'Vui lòng nhập số tiền hợp lệ (số nguyên dương) đã được FIT AND CARE xác nhận'); valid = false; } else setErr('pf-amount', '');
       if (!paymentForm.querySelector('input[name="method"]:checked')) { setErr('method', 'Vui lòng chọn phương thức thanh toán'); valid = false; } else setErr('method', '');
       return valid;
     };
@@ -316,6 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         name: pfName.value.trim(),
         phone: pfPhone.value.trim(),
         email: pfEmail.value.trim(),
+        amount: parseAmountValue(),
         method: paymentForm.querySelector('input[name="method"]:checked').value,
       };
 
